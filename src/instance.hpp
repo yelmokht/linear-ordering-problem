@@ -1,28 +1,44 @@
-/*  Heuristic Optimization assignment, 2015.
-    Adapted by Jérémie Dubois-Lacoste from the ILSLOP implementation
-    of Tommaso Schiavinotto:
-    ---
-    ILSLOP Iterated Local Search Algorithm for Linear Ordering Problem
-    Copyright (C) 2004  Tommaso Schiavinotto (tommaso.schiavinotto@gmail.com)
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 #ifndef _INSTANCE_H_
 #define _INSTANCE_H_
 
-long int **readInstance(const char *filename);
+#include <string>
+#include <array>
+#include <vector>
 
-extern long int PSize;
+#define NUMBER_ALGORITHMS 14
+
+class Instance 
+{
+    private:
+        std::string name_;
+        int size_ = 0;
+        std::vector<std::vector<int>> matrix_;
+        std::vector<int> permutation_;
+        int score_ = 0;
+        int seed_ = 0;
+        std::array<float, NUMBER_ALGORITHMS> relative_percentage_deviations_;
+        std::array<float, NUMBER_ALGORITHMS> computation_times_;
+        float average_relative_percentage_deviation_;
+        float sum_of_computation_time_;
+        void check_file(std::string filepath);
+        void save_matrix(std::string filepath);
+    public:
+        Instance();
+        Instance(std::string filepath);
+        std::string name() const;
+        int size() const;
+        std::vector<std::vector<int>> matrix() const;
+        std::vector<int> permutation() const;
+        int score() const;
+        int seed() const;
+        void set_permutation(std::vector<int> permutation);
+        void permute_rows();
+        void set_score(int score);
+        std::array<float, NUMBER_ALGORITHMS> relative_percentage_deviations();
+        std::array<float, NUMBER_ALGORITHMS> computation_times();
+        float average_relative_percentage_deviation();
+        float sum_of_computation_time();
+        void print();
+};
 
 #endif

@@ -1,118 +1,148 @@
-/*  Heuristic Optimization assignment, 2015.
-    Adapted by Jérémie Dubois-Lacoste from the ILSLOP implementation
-    of Tommaso Schiavinotto:
-    ---
-    ILSLOP Iterated Local Search Algorithm for Linear Ordering Problem
-    Copyright (C) 2004  Tommaso Schiavinotto (tommaso.schiavinotto@gmail.com)
+#include <iostream>
+#include <string>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <filesystem>
 
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
+#include "instance.hpp"
+#include "configuration.hpp"
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <errno.h>
-
-#include "instance.h"
-#include "utilities.h"
-
-#define BUFSIZE 1024
-
-long int PSize;
-
-/* Read a file instance, returning the data matrix. 
-   At the moment works with LOLIB instances */
-long int **readInstance(const char *filename) {
-    FILE *f;
-    char buffer[BUFSIZE+1];
-    long int l, i, j, t;
-    char *k;
-    long int **r;
-   
-    buffer[BUFSIZE] = '\0';
-
-    f = fopen(filename, "r");
-    if ( !f ) {
-	perror("readInstance");
-	fatal("readInstance: Error on reading instance.");
-    }
-    
-    fgets(buffer, BUFSIZE, f);
-    l = strlen(buffer);
-    if ( !l ) 
-	fatal("readInstance: File instance is empty.");
-
-    if (buffer[l-1] != '\n')
-	fatal("readInstance: Header too long.");
-    
-    /* We can save the header with a strncpy if needed */
-    
-    /* Next line is the problem size: /^\s*(\d+)\s*$/ */
-
-    fgets(buffer, BUFSIZE, f);
-    l = strlen(buffer);
-    if ( !l ) 
-	fatal("readInstance: EOF reading size.");
-
-    if (buffer[l-1] != '\n')
-	fatal("readInstance: Unexpected long data where size was expected");
-    
-    for (i = 0; (i < (l-1)) && ( (buffer[i] < '0') || (buffer[i] > '9') ); 
-	 i++);
-    
-    if (i == (l-1)) {
-	printf("%ld (%ld) [%s]", i, l-1, buffer);
-	fatal("readInstance: Size expected but not found.");
-    }
-    PSize = atoi( &buffer[i] );
-
-    r = createMatrix(PSize);
-
-    i = 0; j = 0; 
-
-    while ( i < PSize ) {
-	fgets(buffer, BUFSIZE, f);
-	l = strlen( buffer );
-	if ( !l ) 
-	    fatal("readInstance: Not enough elements.");
-	if (buffer[l-1] != '\n') {
-	    sprintf(buffer, 
-		    "readInstance: Line %ld malformed "
-		    "(too long or unexpected EOF)", 
-		    i+2);
-	    fatal( buffer );
-	}
-	for (t = FALSE, k = buffer; *k != '\n'; k++) 
-	    if ( ( ( *k >= '0' ) && (*k <= '9') ) || ( *k == '-' ) ) {
-		if ( !t ) {
-		    t = TRUE;
-		    r[i][j] = atoi( k ); 
-		    if ( (++j) == PSize ) {
-			j = 0; 
-			if ( (++i) == PSize ) break;
-		    }
-		}
-	    } else 
-		t = FALSE;
-    }
-
-    /* There is no control too see if there are too many elements in respect
-       of the specified size */
-    
-    return(r);
+Instance::Instance() 
+{
 }
 
+Instance::Instance(std::string filepath) 
+{
+    check_file(filepath);
+    save_matrix(filepath);
+    if (VERBOSE) {
+        print();
+    }
+}
 
+void Instance::check_file(std::string filepath)
+{
+    if (!std::filesystem::exists(filepath)) {
+        std::cerr << "Error: file " << filepath << " does not exist" << std::endl;
+        exit(1);
+    }
 
+    auto path = std::filesystem::path(filepath);
+    this->name_ = path.filename().string();
+}
+
+void Instance::save_matrix(std::string filepath)
+{
+    std::ifstream filestream(filepath);
+    if (!filestream.is_open()) {
+        std::cerr << "Error: could not open file " << filepath << std::endl;
+        exit(1);
+    }
+
+    std::stringstream ss;
+    ss << filestream.rdbuf();
+    ss >> this->size_;
+
+    this->permutation_ = std::vector<int>(size_);
+    
+    this->matrix_ = std::vector<std::vector<int>>(size_, std::vector<int>(size_));
+    for (unsigned i = 0 ; i < size_ ; i++) {
+        for (unsigned j = 0 ; j < size_; j++) {
+            ss >> matrix_[i][j];
+            seed_ += matrix_[i][j];
+        }
+    }
+}
+
+std::string
+Instance::name() const
+{
+    return this->name_;
+}
+
+int
+Instance::size() const
+{
+    return this->size_;
+}
+
+std::vector<std::vector<int>>
+Instance::matrix() const
+{
+    return this->matrix_;
+}
+
+std::vector<int>
+Instance::permutation() const
+{
+    return this->permutation_;
+}
+
+int
+Instance::score() const
+{
+    return this->score_;
+}
+
+int
+Instance::seed() const
+{
+    return this->seed_;
+}
+
+void
+Instance::set_permutation(std::vector<int> permutation)
+{
+    this->permutation_ = permutation;
+}
+
+void
+Instance::permute_rows()
+{
+    for (unsigned i = 0; i < size(); ++i) {
+        if (i != permutation_[i]) {
+            std::swap(matrix_[i], matrix_[permutation_[i]]);
+        }
+    }
+}
+
+void
+Instance::set_score(int score)
+{
+    this->score_ = score;
+}
+
+std::array<float, NUMBER_ALGORITHMS>
+Instance::relative_percentage_deviations()
+{
+    return this->relative_percentage_deviations_;
+}
+
+std::array<float, NUMBER_ALGORITHMS>
+Instance::computation_times()
+{
+    return this->computation_times_;
+}
+
+float
+Instance::average_relative_percentage_deviation()
+{
+    return this->average_relative_percentage_deviation_;
+}
+
+float
+Instance::sum_of_computation_time()
+{
+    return this->sum_of_computation_time_;
+}
+
+void
+Instance::print()
+{
+    std::cerr << "- Instance - " << std::endl
+              << "Name: " << this->name_ << std::endl
+              << "Size: " << this->size_ << std::endl
+              << "Seed: " << this->seed_ << std::endl
+              << std::endl;
+}
