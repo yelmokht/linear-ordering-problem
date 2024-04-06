@@ -5,39 +5,39 @@
 #include <array>
 #include <vector>
 
-#define NUMBER_ALGORITHMS 14
+#define BEST_KNOWN_FILE_PATH "./best_known/best_known.txt"
 
 class Instance 
 {
     private:
         std::string name_;
-        int size_ = 0;
         std::vector<std::vector<int>> matrix_;
         std::vector<int> permutation_;
-        int score_ = 0;
+        int size_ = 0;
         int seed_ = 0;
-        std::array<float, NUMBER_ALGORITHMS> relative_percentage_deviations_;
-        std::array<float, NUMBER_ALGORITHMS> computation_times_;
-        float average_relative_percentage_deviation_;
-        float sum_of_computation_time_;
+        int solution_ = 0;
+        int best_known_solution_ = 0;
+        double relative_percentage_deviation_ = 0.0;
+        double computation_time_ = 0.0;
         void check_file(std::string filepath);
         void save_matrix(std::string filepath);
+        void save_best_known_solution(std::string filepath);
     public:
         Instance();
         Instance(std::string filepath);
         std::string name() const;
-        int size() const;
         std::vector<std::vector<int>> matrix() const;
         std::vector<int> permutation() const;
-        int score() const;
+        int size() const;
         int seed() const;
+        int solution() const;
+        int best_known_solution() const;
+        double relative_percentage_deviation() const;
+        double computation_time() const;
         void set_permutation(std::vector<int> permutation);
+        void set_solution(int solution);
+        void set_computation_time(double computation_time);
         void permute_rows();
-        void set_score(int score);
-        std::array<float, NUMBER_ALGORITHMS> relative_percentage_deviations();
-        std::array<float, NUMBER_ALGORITHMS> computation_times();
-        float average_relative_percentage_deviation();
-        float sum_of_computation_time();
         void print();
 };
 

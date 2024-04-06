@@ -2,10 +2,10 @@
 #include <cassert>
 #include <chrono>
 
-#include "configuration.hpp"
+#include "../configuration.hpp"
 #include "algorithm.hpp"
-#include "rules/initial_solution.hpp"
-#include "rules/pivoting.hpp"
+#include "initial_solution.hpp"
+#include "pivoting.hpp"
 
 
 void

@@ -138,3 +138,21 @@ Configuration::print() const
     std::cerr.flush();
 }
 
+// void
+// Configuration::save_statistics()
+// {
+//     std::ofstream file;
+//     std::string file_name = STATISTICS_DIR + algorithm_map_short[a] + "_" + initial_solution_map_short[i] + "_" + pivoting_map_short[p] + "_" + neighbourhood_map_short[n] + ".txt";
+//     file.open(file_name);
+
+//     if (file.is_open()) {
+//         file << "instance cost computation_time" << std::endl;
+//         for (auto& instance : instances) {
+//             file << instance.name() << " " << instance.cost() << " " << instance.computation_time() << std::endl;
+//         }
+//         file.close();
+//     } else {
+//         std::cerr << "Failed to open file for saving statistics." << std::endl;
+//     }
+// }
+

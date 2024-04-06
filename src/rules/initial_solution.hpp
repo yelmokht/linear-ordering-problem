@@ -1,5 +1,5 @@
-#ifndef _INITIAL_SOLUTION_HPP
-#define _INITIAL_SOLUTION_HPP
+#ifndef INITIAL_SOLUTION_HPP
+#define INITIAL_SOLUTION_HPP
 
 #include "../configuration.hpp"
 

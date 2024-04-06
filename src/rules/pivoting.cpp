@@ -19,22 +19,22 @@ compute_cost(Instance& instance, std::vector<int> permutation)
 }
 
 void
-first_improvement(Neighbourhood neighborhood_rule, Instance& instance)
+first_improvement(Neighbourhood neighbourhood_rule, Instance& instance)
 {
     auto permutation = instance.permutation();
-    auto score = compute_cost(instance, permutation);
-    instance.set_score(score);
+    auto solution = compute_cost(instance, permutation);
+    instance.set_solution(solution);
     bool improved = false;
     while (!improved) {
         auto new_permutation = permutation;
         for (int i = 0; i < permutation.size(); ++i) {
             for (int j = i + 1; j < permutation.size(); ++j) {
-                new_permutation = neighbourhood(neighborhood_rule, instance, i, j);
-                auto new_score = compute_cost(instance, new_permutation);
-                if (instance.score() < new_score) {
+                new_permutation = neighbourhood(neighbourhood_rule, instance, i, j);
+                auto new_solution = compute_cost(instance, new_permutation);
+                if (instance.solution() < new_solution) {
                     improved = true;
                     instance.set_permutation(new_permutation);
-                    instance.set_score(new_score);
+                    instance.set_solution(new_solution);
                     break;
                 }
             }
@@ -42,30 +42,29 @@ first_improvement(Neighbourhood neighborhood_rule, Instance& instance)
     }
 }
 
-void 
-best_improvement(Neighbourhood neighborhood_rule, Instance& instance) 
+void
+best_improvement(Neighbourhood neighbourhood_rule, Instance& instance) 
 {
     auto permutation = instance.permutation();
-    auto score = compute_cost(instance, permutation);
-    instance.set_score(score);
+    auto solution = compute_cost(instance, permutation);
+    instance.set_solution(solution);
     bool improved = false;
     while (!improved) {
         auto new_permutation = permutation;
-        int best_score = 0;
-        for (int i = 0; i < permutation.size(); ++i) {
-            for (int j = i + 1; j < permutation.size(); ++j) {
-                new_permutation = neighbourhood(neighborhood_rule, instance, i, j);
-                auto new_score = compute_cost(instance, new_permutation);
-                if (instance.score() < new_score) {
+        int best_solution = 0;
+        for (int i = 0; i < permutation.size(); i++) {
+            for (int j = i + 1; j < permutation.size(); j++) {
+                new_permutation = neighbourhood(neighbourhood_rule, instance, i, j);
+                auto new_solution = compute_cost(instance, new_permutation);
+                if (instance.solution() < new_solution) {
                     improved = true;
                     instance.set_permutation(new_permutation);
-                    instance.set_score(new_score);
-                    break;
+                    instance.set_solution(new_solution);
                 }
-                if (best_score < new_score) {
-                    best_score = new_score;
+                if (best_solution < new_solution) {
+                    best_solution = new_solution;
                     instance.set_permutation(new_permutation);
-                    instance.set_score(new_score);
+                    instance.set_solution(new_solution);
                 }
             }
         }

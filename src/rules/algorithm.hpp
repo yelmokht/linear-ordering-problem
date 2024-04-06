@@ -1,7 +1,7 @@
-#ifndef _ALGORITHM_HPP
-#define _ALGORITHM_HPP
+#ifndef ALGORITHM_HPP
+#define ALGORITHM_HPP
 
-#include "configuration.hpp"
+#include "../configuration.hpp"
 
 void iterative_improvement_algorithm(Pivoting pivoting_rule, Neighbourhood neighborhood_rule, Instance& instance);
 void variable_neighborhood_descent_algorithm(Pivoting pivoting_rule, Neighbourhood neighborhood_rule, Instance& instance);

@@ -16,12 +16,14 @@ Instance::Instance(std::string filepath)
 {
     check_file(filepath);
     save_matrix(filepath);
+    save_best_known_solution(BEST_KNOWN_FILE_PATH);
     if (VERBOSE) {
         print();
     }
 }
 
-void Instance::check_file(std::string filepath)
+void 
+Instance::check_file(std::string filepath)
 {
     if (!std::filesystem::exists(filepath)) {
         std::cerr << "Error: file " << filepath << " does not exist" << std::endl;
@@ -32,7 +34,8 @@ void Instance::check_file(std::string filepath)
     this->name_ = path.filename().string();
 }
 
-void Instance::save_matrix(std::string filepath)
+void 
+Instance::save_matrix(std::string filepath)
 {
     std::ifstream filestream(filepath);
     if (!filestream.is_open()) {
@@ -52,6 +55,33 @@ void Instance::save_matrix(std::string filepath)
             ss >> matrix_[i][j];
             seed_ += matrix_[i][j];
         }
+    }
+}
+
+void 
+Instance::save_best_known_solution(std::string filepath)
+{
+    std::ifstream filestream(filepath);
+    if (!filestream.is_open()) {
+        std::cerr << "Error: could not open file " << filepath << std::endl;
+        exit(1);
+    }
+    
+    std::string line;
+    while (std::getline(filestream, line)) {
+        std::stringstream ss(line);
+        std::string name;
+        int best_known_solution;
+        ss >> name >> best_known_solution;
+        if (name == this->name_) {
+            this->best_known_solution_ = best_known_solution;
+            break;
+        }
+    }
+
+    if (this->best_known_solution_ == 0) {
+        std::cerr << "Error: could not find best known solution for instance " << this->name_ << std::endl;
+        exit(1);
     }
 }
 
@@ -80,9 +110,9 @@ Instance::permutation() const
 }
 
 int
-Instance::score() const
+Instance::solution() const
 {
-    return this->score_;
+    return this->solution_;
 }
 
 int
@@ -91,10 +121,42 @@ Instance::seed() const
     return this->seed_;
 }
 
+double
+Instance::computation_time() const
+{
+    return this->computation_time_;
+}
+
+int
+Instance::best_known_solution() const
+{
+    return this->best_known_solution_;
+}
+
+double
+Instance::relative_percentage_deviation() const
+{
+    return this->relative_percentage_deviation_;
+}
+
 void
 Instance::set_permutation(std::vector<int> permutation)
 {
     this->permutation_ = permutation;
+}
+
+
+void
+Instance::set_solution(int solution)
+{
+    this->solution_ = solution;
+    this->relative_percentage_deviation_ = 100 * (static_cast<double>(best_known_solution_ - solution_) / static_cast<double>(best_known_solution_));
+}
+
+void
+Instance::set_computation_time(double computation_time)
+{
+    this->computation_time_ = computation_time;
 }
 
 void
@@ -108,36 +170,6 @@ Instance::permute_rows()
 }
 
 void
-Instance::set_score(int score)
-{
-    this->score_ = score;
-}
-
-std::array<float, NUMBER_ALGORITHMS>
-Instance::relative_percentage_deviations()
-{
-    return this->relative_percentage_deviations_;
-}
-
-std::array<float, NUMBER_ALGORITHMS>
-Instance::computation_times()
-{
-    return this->computation_times_;
-}
-
-float
-Instance::average_relative_percentage_deviation()
-{
-    return this->average_relative_percentage_deviation_;
-}
-
-float
-Instance::sum_of_computation_time()
-{
-    return this->sum_of_computation_time_;
-}
-
-void
 Instance::print()
 {
     std::cerr << "- Instance - " << std::endl
@@ -145,4 +177,5 @@ Instance::print()
               << "Size: " << this->size_ << std::endl
               << "Seed: " << this->seed_ << std::endl
               << std::endl;
+    std::cerr.flush();
 }
