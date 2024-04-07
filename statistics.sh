@@ -11,24 +11,24 @@ experiment() {
 }
 
 experiments() {
-    experiment "--ii --random --first --transpose" ./statistics/experiments/ii_random_first_transpose.txt
-    experiment "--ii --random --first --exchange" ./statistics/experiments/ii_random_first_exchange.txt
-    experiment "--ii --random --first --insert" ./statistics/experiments/ii_random_first_insert.txt
+    experiment "--ii --random --transpose --first" ./statistics/experiments/ii_random_transpose_first.txt
+    experiment "--ii --random --exchange --first" ./statistics/experiments/ii_random_exchange_first.txt
+    experiment "--ii --random --insert --first" ./statistics/experiments/ii_random_insert_first.txt
 
-    experiment "--ii --random --best --transpose" ./statistics/experiments/ii_random_best_transpose.txt
-    experiment "--ii --random --best --exchange" ./statistics/experiments/ii_random_best_exchange.txt
-    experiment "--ii --random --best --insert" ./statistics/experiments/ii_random_best_insert.txt
+    experiment "--ii --random --transpose --best " ./statistics/experiments/ii_random_transpose_best.txt
+    experiment "--ii --random --exchange --best" ./statistics/experiments/ii_random_exchange_best.txt
+    experiment "--ii --random --insert --best" ./statistics/experiments/ii_random_insert_best.txt
 
-    experiment "--ii --cw --first --transpose" ./statistics/experiments/ii_cw_first_transpose.txt
-    experiment "--ii --cw --first --exchange" ./statistics/experiments/ii_cw_first_exchange.txt
-    experiment "--ii --cw --first --insert" ./statistics/experiments/ii_cw_first_insert.txt
+    experiment "--ii --cw --transpose  --first" ./statistics/experiments/ii_cw_transpose_first.txt
+    experiment "--ii --cw --exchange --first" ./statistics/experiments/ii_cw_exchange_first.txt
+    experiment "--ii --cw --insert --first" ./statistics/experiments/ii_cw_insert_first.txt
 
-    experiment "--ii --cw --best --transpose" ./statistics/experiments/ii_cw_best_transpose.txt
-    experiment "--ii --cw --best --exchange" ./statistics/experiments/ii_cw_best_exchange.txt
-    experiment "--ii --cw --best --insert" ./statistics/experiments/ii_cw_best_insert.txt
+    experiment "--ii --cw --transpose --best" ./statistics/experiments/ii_cw_transpose_best.txt
+    experiment "--ii --cw --exchange --best" ./statistics/experiments/ii_cw_exchange_best.txt
+    experiment "--ii --cw --insert --best " ./statistics/experiments/ii_cw_insert_best.txt
 
-    experiment "--vnd --cw --first --transpose-exchange-insert" ./statistics/experiments/vnd_cw_first_transpose-exchange-insert.txt
-    experiment "--vnd --cw --first --transpose-insert-exchange" ./statistics/experiments/vnd_cw_first_transpose-insert-exchange.txt
+    experiment "--vnd --cw --transpose-exchange-insert --first" ./statistics/experiments/vnd_cw_transpose-exchange-insert_first.txt
+    experiment "--vnd --cw --transpose-insert-exchange --first " ./statistics/experiments/vnd_cw_transpose-insert-exchange_first.txt
 }
 
 report() {

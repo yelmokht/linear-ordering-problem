@@ -37,7 +37,7 @@ Instance::check_file(std::string filepath)
 void 
 Instance::save_matrix(std::string filepath)
 {
-    std::ifstream filestream(filepath);
+    std::ifstream filestream(filepath.c_str());
     if (!filestream.is_open()) {
         std::cerr << "Error: could not open file " << filepath << std::endl;
         exit(1);
@@ -162,10 +162,8 @@ Instance::set_computation_time(double computation_time)
 void
 Instance::permute_rows()
 {
-    for (unsigned i = 0; i < size(); ++i) {
-        if (i != permutation_[i]) {
+    for (int i = 0; i < size(); i++) {
             std::swap(matrix_[i], matrix_[permutation_[i]]);
-        }
     }
 }
 
