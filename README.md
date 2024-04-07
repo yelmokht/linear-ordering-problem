@@ -4,68 +4,34 @@ Implemention of iterative improvement algorithms for the linear ordering problem
 ## Compilation
 
 ~~~
-> make lop vnd
+make lop
 ~~~
 
-## Run on one instance
 
-### II
+## Usage
 
-~~~
-Usage:./lop -i <initialization_rule (cw|random)>
-	        -p <pivoting_rule (first|best)>
-	        -n <neighbourhood (transpose|exchange|insert)>
-	        -f <instance_file>
+```plaintext
+Usage: ./lop [algorithms or help] [initial_solutions] [neighbourhoods] [improvements] [-i <instance_file>]
 
-> ./lop -i cw -p first -n transpose -f ../instances/N-be75eec_250
-~~~
+Algorithms or help:
+  --ii
+  --vnd
+  --help
 
-### VND
+Initial solutions:
+  --random (only with --ii)
+  --cw
 
-~~~
-Usage:./vnd -n <neighbourhood (tei|tie)>
-            -f <instance_file>
+Neighbourhoods:
+  --transpose (only with --ii)
+  --exchange (only with --ii)
+  --insert (only with --ii)
+  --transpose-exchange-insert (only with --vnd)
+  --transpose-insert-exchange (only with --vnd)
 
-> ./vnd -n tei -f ../instances/N-be75eec_250
-~~~
+Improvements:
+  --first
+  --best (only with --ii)
 
-# Scripts
-
-## Generate experiments
-
-~~~
-# Execute all the experiments sequentially (will take a lot of time)
-> ./generate_experiments.lua
-
-OR
-
-# Execute one type of experiment on all instances
-> ./generate_experiments_one.lua lop <random|cw> <first|best>
-                                     <transpose|exchange|insert>
-> ./generate_experiments_one.lua vnd <tei|tie>
-
-OR
-
-# Execute all the experiments in parallel.
-# Comment lines inside the script in order to execute k experiments where k is
-# the number of threads your processor can run.
-> ./generate_experiments.sh
-~~~
-
-## Generate averages
-
-~~~
-# Generate averages from the previous experiments.
-# Requirement: the previous experiments must be placed in the experiments
-# directory at the root of the project.
-> ./compute_averages.lua
-~~~
-
-## Execute statistical hypothesis tests
-
-~~~
-# Execute statistical hypothesis tests on the previous experiments.
-# Requirement: the previous experiments must be placed in the experiments
-# directory at the root of the project.
-> ./statistical_hypothesis_tests.R
+```
 ~~~
