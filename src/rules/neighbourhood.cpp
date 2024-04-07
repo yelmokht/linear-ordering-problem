@@ -54,11 +54,10 @@ transpose(Pivoting pivoting_rule, Instance& instance)
             if (best_solution < new_solution) {
                 best_permutation = new_permutation;
                 best_solution = new_solution;
-                local_optimum = false;
                 if (improvement(pivoting_rule)) {
                     instance.set_permutation(best_permutation);
                     instance.set_solution(best_solution);
-                    break;
+                    return best_solution;
                 }
             }
         }
