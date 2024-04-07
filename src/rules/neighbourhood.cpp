@@ -65,7 +65,6 @@ transpose(Pivoting pivoting_rule, Instance& instance)
         local_optimum = (last_best_solution == best_solution);
         last_best_solution = best_solution;
         iteration++;
-        std::cout << "Iteration: " << iteration << " Solution: " << best_solution << std::endl;
     }
 
     instance.set_permutation(best_permutation);
@@ -172,7 +171,6 @@ insert(Pivoting pivoting_rule, Instance& instance)
         local_optimum = (last_best_solution == best_solution);
         last_best_solution = best_solution;
         iteration++;
-        std::cout << "Iteration: " << iteration << " Solution: " << best_solution << std::endl;
     }
 
     instance.set_permutation(best_permutation);
