@@ -8,6 +8,10 @@
 
 #include "configuration.hpp"
 
+
+/**
+ * Constructor for the Configuration class.
+*/
 Configuration::Configuration(int argc, char *argv[]) 
 {
     parse_args(argc, argv);
@@ -16,6 +20,12 @@ Configuration::Configuration(int argc, char *argv[])
     }
 }
 
+
+/**
+ * Prints the help message for arguments.
+ * 
+ * @param status The exit status.
+*/
 void
 Configuration::help(int status) 
 {
@@ -44,6 +54,13 @@ Configuration::help(int status)
   exit(status);
 }
 
+
+/**
+ * Parses the arguments to make a configuration object from it.
+ * 
+ * @param argc The number of arguments.
+ * @param argv The arguments.
+*/
 void 
 Configuration::parse_args(int argc, char* argv[])
 {
@@ -51,6 +68,7 @@ Configuration::parse_args(int argc, char* argv[])
         help(0);
     }
 
+    // Either II or VND
     if (std::string(argv[1]) == "--ii") {
         this->a = II;
     } else if (std::string(argv[1]) == "--vnd") {
@@ -59,6 +77,8 @@ Configuration::parse_args(int argc, char* argv[])
         help(1);
     }
 
+
+    // Random or Cw
     if (std::string(argv[2]) == "--random" && this->a == II) {
         this->i = RANDOM;
     } else if (std::string(argv[2]) == "--cw") {
@@ -67,7 +87,7 @@ Configuration::parse_args(int argc, char* argv[])
         help(1);
     }
 
-
+    // Transpose, exchange, insert, transpose-exchange-insert, transpose-insert-exchange
     if (std::string(argv[3]) == "--transpose" && this->a == II) {
         this->n = TRANSPOSE;
     } else if (std::string(argv[3]) == "--exchange" && this->a == II) {
@@ -82,6 +102,7 @@ Configuration::parse_args(int argc, char* argv[])
         help(1);
     }
 
+    // First or best
     if (std::string(argv[4]) == "--first") {
         this->p = FIRST;
     } else if (std::string(argv[4]) == "--best" && this->a == II) {
@@ -90,6 +111,7 @@ Configuration::parse_args(int argc, char* argv[])
         help(1);
     }
 
+    // Instance file
     if (std::string(argv[5]) == "-i") {
         this->instance_ = Instance(std::string(argv[6]));
     } else {
@@ -139,22 +161,3 @@ Configuration::print() const
                 << std::endl;
     std::cerr.flush();
 }
-
-// void
-// Configuration::save_statistics()
-// {
-//     std::ofstream file;
-//     std::string file_name = STATISTICS_DIR + algorithm_map_short[a] + "_" + initial_solution_map_short[i] + "_" + pivoting_map_short[p] + "_" + neighbourhood_map_short[n] + ".txt";
-//     file.open(file_name);
-
-//     if (file.is_open()) {
-//         file << "instance cost computation_time" << std::endl;
-//         for (auto& instance : instances) {
-//             file << instance.name() << " " << instance.cost() << " " << instance.computation_time() << std::endl;
-//         }
-//         file.close();
-//     } else {
-//         std::cerr << "Failed to open file for saving statistics." << std::endl;
-//     }
-// }
-

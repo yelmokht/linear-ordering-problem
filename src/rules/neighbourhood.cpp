@@ -5,6 +5,13 @@
 #include "pivoting.hpp"
 
 
+/**
+ * @brief Computes the cost of a permutation based on the given instance.
+ * 
+ * @param instance The instance of the linear ordering problem.
+ * @param permutation The permutation to compute the cost for.
+ * @return The cost of the permutation.
+ */
 int
 compute_cost(Instance& instance, std::vector<int>& permutation)
 {
@@ -20,6 +27,14 @@ compute_cost(Instance& instance, std::vector<int>& permutation)
     return cost;
 }
 
+
+/**
+ * @brief Performs the transpose neighbourhood on the given instance using the specified pivoting rule.
+ * 
+ * @param pivoting_rule The pivoting rule to use.
+ * @param instance The instance of the linear ordering problem.
+ * @return The best solution found after performing the transpose operation.
+ */
 int
 transpose(Pivoting pivoting_rule, Instance& instance) 
 {
@@ -59,6 +74,13 @@ transpose(Pivoting pivoting_rule, Instance& instance)
 }
 
 
+/**
+ * @brief Performs the exchange neighbourhood on the given instance using the specified pivoting rule.
+ * 
+ * @param pivoting_rule The pivoting rule to use.
+ * @param instance The instance of the linear ordering problem.
+ * @return The best solution found after performing the exchange operation.
+ */
 int
 exchange(Pivoting pivoting_rule, Instance& instance)
 {
@@ -100,6 +122,14 @@ exchange(Pivoting pivoting_rule, Instance& instance)
     return best_solution;
 }
 
+
+/**
+ * @brief Performs the insert neighbourhood on the given instance using the specified pivoting rule.
+ * 
+ * @param pivoting_rule The pivoting rule to use.
+ * @param instance The instance of the linear ordering problem.
+ * @return The best solution found after performing the insert operation.
+ */
 int
 insert(Pivoting pivoting_rule, Instance& instance)
 {
@@ -140,6 +170,13 @@ insert(Pivoting pivoting_rule, Instance& instance)
     return best_solution;
 }
 
+/**
+ * @brief Performs the transpose, exchange, and insert operations on the given instance using the specified pivoting rule.
+ * 
+ * @param pivoting_rule The pivoting rule to use.
+ * @param instance The instance of the linear ordering problem.
+ * @return The best solution found after performing the operations.
+ */
 int
 transpose_exchange_insert(Pivoting pivoting_rule, Instance& instance)
 {
@@ -149,6 +186,13 @@ transpose_exchange_insert(Pivoting pivoting_rule, Instance& instance)
     return best_solution;
 }
 
+/**
+ * @brief Performs the transpose, insert, and exchange operations on the given instance using the specified pivoting rule.
+ * 
+ * @param pivoting_rule The pivoting rule to use.
+ * @param instance The instance of the linear ordering problem.
+ * @return The best solution found after performing the operations.
+ */
 int
 transpose_insert_exchange(Pivoting pivoting_rule, Instance& instance)
 {
@@ -158,6 +202,13 @@ transpose_insert_exchange(Pivoting pivoting_rule, Instance& instance)
     return best_solution;
 }
 
+/**
+ * @brief Applies the specified neighbourhood rule to the given instance using the specified pivoting rule.
+ * 
+ * @param neighbourhood_rule The neighbourhood rule to apply.
+ * @param pivoting_rule The pivoting rule to use.
+ * @param instance The instance of the linear ordering problem.
+*/
 void
 neighbourhood(Neighbourhood neighbourhood_rule, Pivoting pivoting_rule, Instance& instance)
 {

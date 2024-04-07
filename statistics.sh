@@ -52,6 +52,6 @@ statistical_tests() {
     ./statistical_tests.r
 }
 
-experiments
-reports
+# experiments
+# reports
 statistical_tests

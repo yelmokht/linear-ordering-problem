@@ -12,6 +12,12 @@ Instance::Instance()
 {
 }
 
+
+/**
+ * Constructor for the Instance class.
+ * 
+ * @param filepath The path to the file containing the instance.
+*/
 Instance::Instance(std::string filepath) 
 {
     check_file(filepath);
@@ -22,6 +28,11 @@ Instance::Instance(std::string filepath)
     }
 }
 
+/**
+ * Checks if the file exists and sets the name of the instance.
+ * 
+ * @param filepath The path to the file to check.
+*/
 void 
 Instance::check_file(std::string filepath)
 {
@@ -34,6 +45,12 @@ Instance::check_file(std::string filepath)
     this->name_ = path.filename().string();
 }
 
+
+/**
+ * Saves the matrix from the file to the instance.
+ * Sets the size of the instance and the seed.
+ * @param filepath The path to the file containing the instance.
+*/
 void 
 Instance::save_matrix(std::string filepath)
 {
@@ -58,6 +75,12 @@ Instance::save_matrix(std::string filepath)
     }
 }
 
+
+/**
+ * Saves the best known solution for the instance.
+ * 
+ * @param filepath The path to the file containing the best known solutions.
+*/
 void 
 Instance::save_best_known_solution(std::string filepath)
 {
@@ -146,6 +169,12 @@ Instance::set_permutation(std::vector<int> permutation)
 }
 
 
+/**
+ * Sets the solution for the instance.
+ * Computes the relative percentage deviation.
+ * 
+ * @param solution The solution to set.
+*/
 void
 Instance::set_solution(int solution)
 {
@@ -159,6 +188,9 @@ Instance::set_computation_time(double computation_time)
     this->computation_time_ = computation_time;
 }
 
+/**
+ * Permutes the rows of the matrix according to the permutation.
+*/
 void
 Instance::permute_rows()
 {

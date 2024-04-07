@@ -4,8 +4,13 @@
 #include "configuration.hpp"
 #include "./rules/algorithm.hpp"
 
+
+/*
+Solves the LOP using the given configuration.
+*/
 void solve_lop(Configuration& configuration)
 {
+	// Start the timer
 	auto start = std::chrono::high_resolution_clock::now();
 
 	if (VERBOSE) 
@@ -14,14 +19,17 @@ void solve_lop(Configuration& configuration)
 		std::cerr.flush();
 	}
 
+	// Get the rules from the configuration
 	auto algorithm_rule = configuration.algorithm();
 	auto initial_solution_rule = configuration.initial_solution();
 	auto neighbourhood_rule = configuration.neighbourhood();
 	auto pivoting_rule = configuration.pivoting();
 	auto instance = configuration.instance();
 
+	// Use the rules to solve the LOP
 	algorithm(algorithm_rule, initial_solution_rule, neighbourhood_rule, pivoting_rule, instance);
 
+	// Stop the timer
 	auto stop = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(stop - start);
 	instance.set_computation_time(duration.count());
@@ -47,7 +55,11 @@ void solve_lop(Configuration& configuration)
 int
 main(int argc, char *argv[])
 {
+	// Parse command line arguments and make a configuration object
 	auto configuration = Configuration(argc, argv);
+
+	// Solve the LOP using the configuration
 	solve_lop(configuration);
+
 	return EXIT_SUCCESS;
 }
