@@ -10,7 +10,7 @@ make lop
 
 ## Usage
 
-```plaintext
+```bash
 Usage: ./lop [algorithms or help] [initial_solutions] [neighbourhoods] [improvements] [-i <instance_file>]
 
 Algorithms or help:
@@ -34,4 +34,9 @@ Improvements:
   --best (only with --ii)
 
 ```
-~~~
+
+##Statistics
+
+```bash
+make statistics
+```
