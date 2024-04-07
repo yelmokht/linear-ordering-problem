@@ -23,7 +23,6 @@ compute_cost(Instance& instance, std::vector<int>& permutation)
             cost += matrix[permutation[i]][permutation[j]];
         }
     }
-    // std::cout << "Cost: " << cost << std::endl;
     return cost;
 }
 
@@ -45,7 +44,8 @@ transpose(Pivoting pivoting_rule, Instance& instance)
     auto best_solution = solution;
     bool local_optimum = false;
     auto iteration = 1;
-    while(!local_optimum) {
+
+    while(!local_optimum && iteration <= MAX_ITERATIONS) {
         for (int i = 0; i + 1 < instance.size(); i++) {
             auto new_permutation = best_permutation;
             std::swap(new_permutation[i], new_permutation[i+1]);
@@ -58,16 +58,16 @@ transpose(Pivoting pivoting_rule, Instance& instance)
                 if (improvement(pivoting_rule)) {
                     instance.set_permutation(best_permutation);
                     instance.set_solution(best_solution);
-                    return best_solution;
+                    break;
                 }
             }
         }
         local_optimum = (last_best_solution == best_solution);
         last_best_solution = best_solution;
         iteration++;
-        // std::cout << "Iteration: " << iteration << std::endl;
-        // std::cout << "Best solution: " << best_solution << std::endl;
+        std::cout << "Iteration: " << iteration << " Solution: " << best_solution << std::endl;
     }
+
     instance.set_permutation(best_permutation);
     instance.set_solution(best_solution);
     return best_solution;
@@ -91,7 +91,8 @@ exchange(Pivoting pivoting_rule, Instance& instance)
     auto best_solution = solution;
     bool local_optimum = false;
     auto iteration = 1;
-    while (!local_optimum) {
+
+    while (!local_optimum && iteration <= MAX_ITERATIONS) {
         for (int i = 0; i < instance.size(); i++) {
             for (int j = i+1; j < instance.size(); j++) {
                 auto new_permutation = best_permutation;
@@ -101,7 +102,7 @@ exchange(Pivoting pivoting_rule, Instance& instance)
                 if (best_solution < new_solution) {
                     best_permutation = new_permutation;
                     best_solution = new_solution;
-                    local_optimum = false;
+
                     if (improvement(pivoting_rule)) {
                         instance.set_permutation(best_permutation);
                         instance.set_solution(best_solution);
@@ -110,11 +111,10 @@ exchange(Pivoting pivoting_rule, Instance& instance)
                 }
             }
         }
+
         local_optimum = (last_best_solution == best_solution);
         last_best_solution = best_solution;
         iteration++;
-        // std::cout << "Iteration: " << iteration << std::endl;
-        // std::cout << "Best solution: " << best_solution << std::endl;
     }
     
     instance.set_permutation(best_permutation);
@@ -136,35 +136,45 @@ insert(Pivoting pivoting_rule, Instance& instance)
     auto permutation = instance.permutation();
     auto best_permutation = permutation;
     auto solution = compute_cost(instance, permutation);
+    auto last_best_solution = solution;
     auto best_solution = solution;
+    bool local_optimum = false;
+    auto iteration = 1;
 
-    for (int i = 0; i < instance.size(); i++) {
-        for (int j = 0; j < instance.size(); j++) {
-            auto new_permutation = best_permutation;
-            if (i == j) {break;}
-            
-            int value = new_permutation[i];
-            
-            if (i < j) {
-                new_permutation.erase(new_permutation.begin() + i);
-                new_permutation.insert(new_permutation.begin() + j + 1, value);
-            } else {
-                new_permutation.insert(new_permutation.begin() + j, value);
-                new_permutation.erase(new_permutation.begin() + i + 1);
-            }
-            auto new_solution = compute_cost(instance, new_permutation);
+    while (!local_optimum && iteration <= MAX_ITERATIONS) {
+        for (int i = 0; i < instance.size(); i++) {
+            for (int j = 0; j < instance.size(); j++) {
+                auto new_permutation = best_permutation;
+                if (i == j) {break;}
+                
+                int value = new_permutation[i];
+                
+                if (i < j) {
+                    new_permutation.erase(new_permutation.begin() + i);
+                    new_permutation.insert(new_permutation.begin() + j + 1, value);
+                } else {
+                    new_permutation.insert(new_permutation.begin() + j, value);
+                    new_permutation.erase(new_permutation.begin() + i + 1);
+                }
+                auto new_solution = compute_cost(instance, new_permutation);
 
-            if (best_solution < new_solution) {
-                best_permutation = new_permutation;
-                best_solution = new_solution;
-                if (improvement(pivoting_rule)) {
-                    instance.set_permutation(best_permutation);
-                    instance.set_solution(best_solution);
-                    return best_solution;
+                if (best_solution < new_solution) {
+                    best_permutation = new_permutation;
+                    best_solution = new_solution;
+                    if (improvement(pivoting_rule)) {
+                        instance.set_permutation(best_permutation);
+                        instance.set_solution(best_solution);
+                        return best_solution;
+                    }
                 }
             }
         }
+        local_optimum = (last_best_solution == best_solution);
+        last_best_solution = best_solution;
+        iteration++;
+        std::cout << "Iteration: " << iteration << " Solution: " << best_solution << std::endl;
     }
+
     instance.set_permutation(best_permutation);
     instance.set_solution(best_solution);
     return best_solution;

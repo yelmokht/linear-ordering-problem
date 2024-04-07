@@ -3,6 +3,7 @@
 
 #include "../configuration.hpp"
 
+#define MAX_ITERATIONS 10 // Maximum number of iterations to perform in the neighbourhood search (need to implement speed-up for cost)
 int compute_cost(Instance& instance, std::vector<int>& permutation);
 int transpose(Pivoting pivoting_rule, Instance& instance);
 int exchange(Pivoting pivoting_rule, Instance& instance);
