@@ -1,7 +1,9 @@
 CC=g++
 CFLAGS=-std=c++17 -O3 -Wall
 
-OBJECTS=src/main.o src/configuration.o src/instance.o src/rules/algorithm.o src/rules/initial_solution.o src/rules/pivoting.o src/rules/neighbourhood.o
+SRC_DIR := src/
+CPP_FILES := $(shell find $(SRC_DIR) -name '*.cpp')
+OBJECTS := $(patsubst %.cpp, %.o, $(CPP_FILES))
 
 .PHONY: clean
 
@@ -11,7 +13,9 @@ lop: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o lop
 
 statistics: lop
-	./statistics.sh
+	./scripts/script.py
 
 clean:
 	rm -f src/*~ src/*.o src/rules/*.o statistics/*/*.txt lop
+	find src -type f -name '*.o' -delete
+
