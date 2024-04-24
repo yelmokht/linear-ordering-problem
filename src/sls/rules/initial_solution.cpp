@@ -53,12 +53,9 @@ initial_solution(InitialSolution initial_solution_rule, Instance& instance)
     {
     case RANDOM:
         return random_solution(instance);
-        break;
     case CW:
         return cw_solution(instance);
-        break;
     default:
         assert(false);
-        break;
     }
 }

@@ -11,7 +11,7 @@ Solution::Solution(int size)
 }
 
 int
-Solution::size()
+Solution::size() const
 {
     return this->size_;
 }
@@ -23,7 +23,7 @@ Solution::permutation() const
 }
 
 int
-Solution::score()
+Solution::score() const
 {
     return this->score_;
 }
@@ -31,7 +31,10 @@ Solution::score()
 void
 Solution::swap_permutation(int i, int j)
 {
-    std::swap(this->permutation_[i], this->permutation_[j]);
+    // std::swap(this->permutation_[i], this->permutation_[j]);
+    unsigned value = permutation_[i];
+    permutation_[i] = permutation_[j];
+    permutation_[j] = value;
 }
 
 void
@@ -69,11 +72,11 @@ Solution::set_score(int score)
 bool
 Solution::operator==(const Solution& other) const
 {
-    return this->permutation_ == other.permutation();
+    return this->score_ == other.score();
 }
 
 bool
 Solution::operator!=(const Solution& other) const
 {
-    return this->permutation_ != other.permutation();
+    return this->score_ != other.score();
 }

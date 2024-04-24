@@ -12,9 +12,9 @@ class Solution
     public:
         Solution();
         Solution(int size);
-        int size();
+        int size() const;
         std::vector<int> permutation() const;
-        int score();
+        int score() const;
         void swap_permutation(int i, int j);
         void transpose_permutation(int i, int j);
         void exchange_permutation(int i, int j);

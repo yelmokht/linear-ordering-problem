@@ -11,21 +11,18 @@
 Solution
 first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution solution)
 {
-    Solution best_solution = solution;
-
     for (int i = 0; i < instance.size(); i++) {
-        for (int j = 0; j < instance.size(); j++) {
+        for (int j = i + 1; j < instance.size(); j++) {
 
             Solution new_solution = neighbourhood(neighbourhood_rule, instance, solution, i, j);
 
-            if (new_solution.score() > best_solution.score()) {
-                best_solution = new_solution;
-                return best_solution;
+            if (new_solution.score() > solution.score()) {
+                return new_solution;
             }
         }
     }
 
-    return best_solution;
+    return solution;
 }
 
 Solution
@@ -36,12 +33,11 @@ best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution 
     for (int i = 0; i < instance.size(); i++) {
         for (int j = 0; j < instance.size(); j++) {
 
-            Solution new_solution = neighbourhood(neighbourhood_rule, instance, solution, i, j);
+            Solution new_solution = neighbourhood(neighbourhood_rule, instance, best_solution, i, j);
 
             if (new_solution.score() > best_solution.score()) {
                 best_solution = new_solution;
             }
-
         }
     }
 

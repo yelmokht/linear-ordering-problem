@@ -178,23 +178,15 @@ Instance::set_computation_time(double computation_time)
     this->computation_time_ = computation_time;
 }
 
-// void
-// Instance::permute_rows()
-// {
-//     for (int i = 0; i < size(); i++) {
-//             std::swap(matrix_[i], matrix_[solution.permutation[i]]);
-//     }
-// }
-
 void
 Instance::print()
 {
-    std::cerr << "- Instance - " << std::endl
-              << "Name: " << this->name_ << std::endl
-              << "Size: " << this->size_ << std::endl
-              << "Seed: " << this->seed_ << std::endl
-              << std::endl;
-    std::cerr.flush();
+	std::cout 	<< name()<< " "
+				<< solution().score() << " "
+				<< best_known_score() << " "
+				<< relative_percentage_deviation() << " "
+				<< computation_time()
+				<< std::endl;
 }
 
 int

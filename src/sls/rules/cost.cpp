@@ -20,7 +20,7 @@ int transpose_cost(Instance& instance, Solution& old_solution, int i, int j) {
     auto oldP = old_solution.permutation();
     unsigned oldPfirst = oldP[i];
     unsigned oldPsecond = oldP[j];
-    long int delta = matrix[oldPsecond][oldPfirst] - matrix[oldPfirst][oldPsecond];
+    int delta = matrix[oldPsecond][oldPfirst] - matrix[oldPfirst][oldPsecond];
     return delta;
 }
 
@@ -30,7 +30,7 @@ int exchange_cost(Instance& instance, Solution& old_solution, int i, int j) {
     unsigned oldPfirst = oldP[i];
     unsigned oldPsecond = oldP[j];
 
-    long int delta = matrix[oldPsecond][oldPfirst] - matrix[oldPfirst][oldPsecond];
+    int delta = matrix[oldPsecond][oldPfirst] - matrix[oldPfirst][oldPsecond];
     for (unsigned k = i + 1 ; k < j ; k++) {
         delta += matrix[oldPsecond][oldP[k]] - matrix[oldPfirst][oldP[k]];
         delta += matrix[oldP[k]][oldPfirst] - matrix[oldP[k]][oldPsecond];
@@ -44,7 +44,7 @@ int insert_cost(Instance& instance, Solution& old_solution, int i, int j) {
     auto oldP = old_solution.permutation();
     unsigned oldPfirst = oldP[i];
     
-    long int delta = 0;
+    int delta = 0;
     if (i < j) {
         for (unsigned k = i + 1 ; k <= j ; k++) {
             delta += matrix[oldP[k]][oldPfirst] - matrix[oldPfirst][oldP[k]];
