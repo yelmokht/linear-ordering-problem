@@ -26,6 +26,5 @@ IterativeImprovement::run(Instance& instance)
         std::cout << "Iteration: " << iteration << " Score: " << solution.score() << std::endl;
         iteration++;
     }
-
     instance.set_solution(solution);
 }

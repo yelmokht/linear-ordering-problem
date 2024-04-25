@@ -8,16 +8,17 @@
 #include "../../lop/configuration.hpp"
 
 
-Solution
-first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution solution)
+Solution&
+first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
 {
     for (int i = 0; i < instance.size(); i++) {
-        for (int j = i + 1; j < instance.size(); j++) {
+        for (int j = 0; j < instance.size(); j++) {
 
             Solution new_solution = neighbourhood(neighbourhood_rule, instance, solution, i, j);
 
             if (new_solution.score() > solution.score()) {
-                return new_solution;
+                solution = new_solution;
+                return solution;
             }
         }
     }
@@ -25,15 +26,15 @@ first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution
     return solution;
 }
 
-Solution
-best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution solution) 
+Solution&
+best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
 {
     Solution best_solution = solution;
 
     for (int i = 0; i < instance.size(); i++) {
         for (int j = 0; j < instance.size(); j++) {
 
-            Solution new_solution = neighbourhood(neighbourhood_rule, instance, best_solution, i, j);
+            Solution new_solution = neighbourhood(neighbourhood_rule, instance, solution, i, j);
 
             if (new_solution.score() > best_solution.score()) {
                 best_solution = new_solution;
@@ -41,11 +42,12 @@ best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution 
         }
     }
 
-    return best_solution;
+    solution = best_solution;
+    return solution;
 }
 
 
-Solution improvement(Pivoting pivoting_rule, Neighbourhood neighbourhood_rule, Instance& instance, Solution solution)
+Solution& improvement(Pivoting pivoting_rule, Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
 {
     switch (pivoting_rule)
     {
