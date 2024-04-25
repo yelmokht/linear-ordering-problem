@@ -25,24 +25,30 @@ cw_solution(Instance& instance)
     Solution cw_solution = instance.solution();
     auto cw_permutation = cw_solution.permutation();
     std::iota(cw_permutation.begin(), cw_permutation.end(), 0);
-    auto default_permutation = cw_permutation;
-    
+
     for (unsigned step = 0 ; step < instance.size(); step++) {
         unsigned best_row = step;
         long int best_row_score = -1;
+
         for (unsigned row = step ; row < instance.size() ; row++) {
-                long int current_row_score = 0;
-                for (unsigned col = 1 + step ; col < instance.size(); col++) {
+            long int current_row_score = 0;
+
+            for (unsigned col = 1 + step ; col < instance.size(); col++) {
                     current_row_score += matrix[cw_permutation[row]][col];
-                }
+            }
+
             if (best_row_score < current_row_score) {
                 best_row = row;
                 best_row_score = current_row_score;
             }
-    }
+        }
+
         std::swap(cw_permutation[step], cw_permutation[best_row]);
     }
     
+    cw_solution.set_permutation(cw_permutation);
+    cw_solution.set_score(instance.evaluate(cw_solution));
+
     return cw_solution;
 }
 

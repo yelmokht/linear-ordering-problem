@@ -50,10 +50,6 @@ neighbourhood(Neighbourhood neighbourhood_rule, Instance& instance, Solution sol
             return exchange(instance, solution, i, j);
         case INSERT:
             return insert(instance, solution, i, j);
-        // case TRANSPOSE_EXCHANGE_INSERT:
-        //     return transpose_exchange_insert(instance, solution, i, j);
-        // case TRANSPOSE_INSERT_EXCHANGE:
-        //     return transpose_insert_exchange(instance, solution, i, j);
         default:
             assert(false);
     }

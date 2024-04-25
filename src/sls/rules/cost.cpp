@@ -59,20 +59,6 @@ int insert_cost(Instance& instance, Solution& old_solution, int i, int j) {
     return delta;
 }
 
-int transpose_exchange_insert_cost(Instance& instance, Solution& old_solution, int i, int j) {
-    // Implementation of the combined cost function for transpose, exchange, and insert operations
-    // Calculate the cost difference between the old and new solution after a combination of operations
-    // Return the cost difference
-    return 0;
-}
-
-int transpose_insert_exchange_cost(Instance& instance, Solution& old_solution, int i, int j) {
-    // Implementation of the combined cost function for transpose, insert, and exchange operations
-    // Calculate the cost difference between the old and new solution after a combination of operations
-    // Return the cost difference
-    return 0;
-}
-
 int evaluate(Neighbourhood neighbourhood_rule, Instance& instance, Solution& old_solution, int i, int j)
 {
     switch (neighbourhood_rule)
@@ -83,10 +69,6 @@ int evaluate(Neighbourhood neighbourhood_rule, Instance& instance, Solution& old
             return exchange_cost(instance, old_solution, i, j);
         case INSERT:
             return insert_cost(instance, old_solution, i, j);
-        case TRANSPOSE_EXCHANGE_INSERT:
-            return transpose_exchange_insert_cost(instance, old_solution, i, j);
-        case TRANSPOSE_INSERT_EXCHANGE:
-            return transpose_insert_exchange_cost(instance, old_solution, i, j);
         default:
             assert(false);
     }

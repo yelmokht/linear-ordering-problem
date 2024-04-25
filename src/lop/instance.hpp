@@ -39,7 +39,6 @@ class Instance
         // double termination_criterion();
         void set_solution(Solution solution);
         void set_computation_time(double computation_time);
-        // void permute_rows();
         int evaluate(Solution& solution);
         void print();
 };
