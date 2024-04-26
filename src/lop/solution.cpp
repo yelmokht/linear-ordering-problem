@@ -8,6 +8,7 @@ Solution::Solution(int size)
     this->size_ = size;
     this->permutation_ = std::vector<int>(size);
     this->score_ = 0;
+    this->last_neighbour_ = {0, 0};
 }
 
 int
@@ -26,6 +27,12 @@ int
 Solution::score() const
 {
     return this->score_;
+}
+
+std::pair<unsigned, unsigned>
+Solution::last_neighbour() const
+{
+    return this->last_neighbour_;
 }
 
 void
@@ -66,6 +73,12 @@ Solution::set_score(int score)
     this->score_ = score;
 }
 
+void
+Solution::set_last_neighbour(std::pair<unsigned, unsigned> last_neighbour)
+{
+    this->last_neighbour_ = last_neighbour;
+}
+
 bool
 Solution::operator==(const Solution& other) const
 {
@@ -76,4 +89,13 @@ bool
 Solution::operator!=(const Solution& other) const
 {
     return this->score_ != other.score();
+}
+
+void
+Solution::print() const
+{
+    for (int i = 0; i < this->size(); i++) {
+        std::cout << this->permutation_[i] << " ";
+    }
+    std::cout << std::endl;
 }

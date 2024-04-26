@@ -8,6 +8,7 @@
 #include "solution.hpp"
 
 #define BEST_KNOWN_FILE_PATH "./best_known/best_known.txt"
+#define MAX_RUNTIME_FILE_PATH "./statistics/max_runtime.txt"
 
 class Instance 
 {
@@ -20,10 +21,11 @@ class Instance
         int best_known_score_ = 0;
         double relative_percentage_deviation_ = 0.0;
         double computation_time_ = 0.0;
-        double termination_criterion = 0.0;
+        double max_runtime_ = 0.0;
         void check_file(std::string filepath);
         void save_matrix(std::string filepath);
         void save_best_known_score(std::string filepath);
+
     public:
         Instance();
         Instance(std::string filepath);
@@ -36,10 +38,12 @@ class Instance
         int best_known_score() const;
         double relative_percentage_deviation() const;
         double computation_time() const;
-        // double termination_criterion();
+        double max_runtime() const;
         void set_solution(Solution solution);
         void set_computation_time(double computation_time);
         int evaluate(Solution& solution);
+        void permute(Solution& solution);
+        void save_max_runtime();
         void print();
 };
 

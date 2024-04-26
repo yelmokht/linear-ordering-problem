@@ -15,15 +15,15 @@ VariableNeighbourhoodDescent::get_neighbourhoods(Neighbourhood neighbourhood_rul
 {
     switch (neighbourhood_rule)
     {
-        case TRANSPOSE_EXCHANGE_INSERT:
-            neighbourhood_rules[0] = TRANSPOSE;
-            neighbourhood_rules[1] = EXCHANGE;
-            neighbourhood_rules[2] = INSERT;
+        case Neighbourhood::TRANSPOSE_EXCHANGE_INSERT:
+            neighbourhood_rules[0] = Neighbourhood::TRANSPOSE;
+            neighbourhood_rules[1] = Neighbourhood::EXCHANGE;
+            neighbourhood_rules[2] = Neighbourhood::INSERT;
             break;
-        case TRANSPOSE_INSERT_EXCHANGE:
-            neighbourhood_rules[0] = TRANSPOSE;
-            neighbourhood_rules[1] = INSERT;
-            neighbourhood_rules[2] = EXCHANGE;
+        case Neighbourhood::TRANSPOSE_INSERT_EXCHANGE:
+            neighbourhood_rules[0] = Neighbourhood::TRANSPOSE;
+            neighbourhood_rules[1] = Neighbourhood::INSERT;
+            neighbourhood_rules[2] = Neighbourhood::EXCHANGE;
             break;
     }
 }
@@ -39,13 +39,13 @@ VariableNeighbourhoodDescent::run(Instance& instance)
 
         if (solution.score() > last_solution.score()) {
             last_solution = solution;
-            std::cout << "New best solution: " << solution.score() << std::endl;
-            std::cout << "Back to neighbourhood 0" << std::endl;
+            // std::cout << "New best solution: " << solution.score() << std::endl;
+            // std::cout << "Back to neighbourhood 0" << std::endl;
             i = 0;
         } else {
-            std::cout << "No improvement, trying next neighbourhood" << std::endl;
+            // std::cout << "No improvement, trying next neighbourhood" << std::endl;
             i++;
-            std::cout << "Neighbourhood " << i << std::endl;
+            // std::cout << "Neighbourhood " << i << std::endl;
         }
     }
     instance.set_solution(solution);

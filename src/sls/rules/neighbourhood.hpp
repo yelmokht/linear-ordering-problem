@@ -5,11 +5,15 @@
 #include "../../lop/instance.hpp"
 #include "../../lop/solution.hpp"
 
-Solution transpose(Instance& instance, Solution solution, int i, int j);
-Solution exchange(Instance& instance, Solution solution, int i, int j);
-Solution insert(Instance& instance, Solution solution, int i, int j);
-// Solution transpose_exchange_insert(Instance& instance, Solution& solution, int i, int j);
-// Solution transpose_insert_exchange(Instance& instance, Solution& solution, int i, int j);
-Solution neighbourhood(Neighbourhood neighbourhood_rule, Instance& instance, Solution solution, int i, int j);
+
+bool transpose_is_valid(unsigned i, unsigned j);
+bool exchange_is_valid(unsigned i, unsigned j);
+bool insert_is_valid(unsigned i, unsigned j);
+bool neighbourhood_is_valid(Neighbourhood neighbourhood_rule, unsigned i, unsigned j);
+
+Solution& transpose(Solution& solution, unsigned i, unsigned j);
+Solution& exchange(Solution& solution, unsigned i, unsigned j);
+Solution& insert(Solution& solution, unsigned i, unsigned j);
+Solution& apply_permutation(Neighbourhood neighbourhood_rule, Solution& solution, unsigned i, unsigned j);
 
 #endif

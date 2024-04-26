@@ -7,10 +7,9 @@ local_optimum_criterion_is_not_satisfied(Solution& last_solution, Solution& new_
 }
 
 bool
-terminal_criterion_is_not_satisfied(double terminal_criterion, std::chrono::duration<double> elapsed)
+terminal_criterion_is_not_satisfied(double elapsed_time, double max_runtime)
 {
-    // return elapsed < terminal_criterion;
-    return false;
+    return elapsed_time < max_runtime;
 }
 
 bool

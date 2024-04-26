@@ -7,21 +7,33 @@
 #include "genetic/memetic_algorithm.hpp"
 
 void
-sls_algorithm(Algorithm algorithm_rule, InitialSolution initial_solution_rule, Neighbourhood neighbourhood_rule, Pivoting pivoting_rule, Instance& instance)
+sls_algorithm(Configuration& configuration, Instance& instance)
 {
+    auto algorithm_rule = configuration.algorithm();
+    auto initial_solution_rule = configuration.initial_solution();
+    auto neighbourhood_rule = configuration.neighbourhood();
+    auto pivoting_rule = configuration.pivoting();
+    auto local_search_rule = configuration.local_search();
+    auto perturbation_rule = configuration.perturbation();
+    auto recombination_rule = configuration.recombination();
+    auto mutation_rule = configuration.mutation();
+    auto selection_rule = configuration.selection();
+
     switch (algorithm_rule)
     {
-    case II:
+    case Algorithm::II:
         IterativeImprovement(initial_solution_rule, neighbourhood_rule, pivoting_rule).run(instance);
         break;
-    case VND:
+    case Algorithm::VND:
         VariableNeighbourhoodDescent(initial_solution_rule, neighbourhood_rule, pivoting_rule).run(instance);
         break;
-    case ILS:
-        IteratedLocalSearch().run(pivoting_rule, instance);
+    case Algorithm::ILS:
+        instance.save_max_runtime();
+        IteratedLocalSearch(initial_solution_rule, local_search_rule, perturbation_rule).run(instance);
         break;
-    case MA:
-        MemeticAlgorithm(0.2, 1000).run(instance);
+    case Algorithm::MA:
+        instance.save_max_runtime();
+        MemeticAlgorithm(initial_solution_rule, local_search_rule, recombination_rule, mutation_rule, selection_rule).run(instance);
         break;
     default:
         assert(false);

@@ -7,68 +7,68 @@ int cost_function(Instance& instance, Solution& solution) {
     auto permutation = solution.permutation();
     int size = instance.size();
     int cost = 0;
-    for (int i = 0; i < size; i++) {
-        for (int j = i + 1; j < size; j++) {
+    for (unsigned i = 0; i < size; i++) {
+        for (unsigned j = i + 1; j < size; j++) {
             cost += matrix[permutation[i]][permutation[j]];
         }
     }
     return cost;
 }
 
-int transpose_cost(Instance& instance, Solution& old_solution, int i, int j) {
+int transpose_delta(Instance& instance, Solution& solution, unsigned i, unsigned j) {
     auto matrix = instance.matrix();
-    auto oldP = old_solution.permutation();
-    unsigned oldPfirst = oldP[i];
-    unsigned oldPsecond = oldP[j];
-    int delta = matrix[oldPsecond][oldPfirst] - matrix[oldPfirst][oldPsecond];
+    auto permutation = solution.permutation();
+    unsigned k = permutation[i];
+    unsigned l = permutation[j];
+    int delta = matrix[l][k] - matrix[k][l];
     return delta;
 }
 
-int exchange_cost(Instance& instance, Solution& old_solution, int i, int j) {
+int exchange_delta(Instance& instance, Solution& solution, unsigned i, unsigned j) {
     auto matrix = instance.matrix();
-    auto oldP = old_solution.permutation();
-    unsigned oldPfirst = oldP[i];
-    unsigned oldPsecond = oldP[j];
+    auto permutation = solution.permutation();
+    unsigned k = permutation[i];
+    unsigned l = permutation[j];
+    int delta = matrix[l][k] - matrix[k][l];
 
-    int delta = matrix[oldPsecond][oldPfirst] - matrix[oldPfirst][oldPsecond];
-    for (unsigned k = i + 1 ; k < j ; k++) {
-        delta += matrix[oldPsecond][oldP[k]] - matrix[oldPfirst][oldP[k]];
-        delta += matrix[oldP[k]][oldPfirst] - matrix[oldP[k]][oldPsecond];
+    for (unsigned m = i + 1 ; m < j ; m++) {
+        delta += matrix[l][permutation[m]] - matrix[k][permutation[m]];
+        delta += matrix[permutation[m]][k] - matrix[permutation[m]][l];
     }
 
     return delta;
 }
 
-int insert_cost(Instance& instance, Solution& old_solution, int i, int j) {
+int insert_delta(Instance& instance, Solution& solution, unsigned i, unsigned j) {
     auto matrix = instance.matrix();
-    auto oldP = old_solution.permutation();
-    unsigned oldPfirst = oldP[i];
-    
+    auto permutation = solution.permutation();
+    unsigned k = permutation[i];
     int delta = 0;
+    
     if (i < j) {
-        for (unsigned k = i + 1 ; k <= j ; k++) {
-            delta += matrix[oldP[k]][oldPfirst] - matrix[oldPfirst][oldP[k]];
+        for (unsigned m = i + 1 ; m <= j ; m++) {
+            delta += matrix[permutation[m]][k] - matrix[k][permutation[m]];
         }
     }
     else if (i > j) {
-        for (unsigned k = j ; k <= i - 1 ; k++) {
-            delta += matrix[oldPfirst][oldP[k]] - matrix[oldP[k]][oldPfirst];
+        for (unsigned m = j ; m <= i - 1 ; m++) {
+            delta += matrix[k][permutation[m]] - matrix[permutation[m]][k];
         }
     }
     
     return delta;
 }
 
-int evaluate(Neighbourhood neighbourhood_rule, Instance& instance, Solution& old_solution, int i, int j)
+int delta(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution, unsigned i, unsigned j)
 {
     switch (neighbourhood_rule)
     {
-        case TRANSPOSE:
-            return transpose_cost(instance, old_solution, i, j);
-        case EXCHANGE:
-            return exchange_cost(instance, old_solution, i, j);
-        case INSERT:
-            return insert_cost(instance, old_solution, i, j);
+        case Neighbourhood::TRANSPOSE:
+            return transpose_delta(instance, solution, i, j);
+        case Neighbourhood::EXCHANGE:
+            return exchange_delta(instance, solution, i, j);
+        case Neighbourhood::INSERT:
+            return insert_delta(instance, solution, i, j);
         default:
             assert(false);
     }

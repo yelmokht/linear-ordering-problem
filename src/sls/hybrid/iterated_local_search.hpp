@@ -7,11 +7,14 @@
 
 class IteratedLocalSearch
 {
+    private:
+        InitialSolution initial_solution_rule;
+        LocalSearch local_search_rule;
+        Perturbation perturbation_rule;
+
     public:
-        IteratedLocalSearch();
-        void local_search(Pivoting pivoting_rule, Instance& instance, Solution& solution);
-        void perturbation(Pivoting pivoting_rule, Instance& instance, Solution& solution);
-        void run(Pivoting pivoting_rule, Instance& instance);
+        IteratedLocalSearch(InitialSolution initial_solution_rule, LocalSearch local_search_rule, Perturbation perturbation_rule);
+        void run(Instance& instance);
 };
 
 #endif

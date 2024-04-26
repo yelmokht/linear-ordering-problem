@@ -6,15 +6,11 @@
 
 void solve_lop(Configuration& configuration)
 {
-	auto algorithm_rule = configuration.algorithm();
-	auto initial_solution_rule = configuration.initial_solution();
-	auto neighbourhood_rule = configuration.neighbourhood();
-	auto pivoting_rule = configuration.pivoting();
-	auto instance = configuration.instance();
 	
 	auto start = std::chrono::high_resolution_clock::now();
+	auto instance = configuration.instance();
 
-	sls_algorithm(algorithm_rule, initial_solution_rule, neighbourhood_rule, pivoting_rule, instance);
+	sls_algorithm(configuration, instance);
 
 	auto stop = std::chrono::high_resolution_clock::now();
 	auto duration = std::chrono::duration_cast<std::chrono::duration<double>>(stop - start);

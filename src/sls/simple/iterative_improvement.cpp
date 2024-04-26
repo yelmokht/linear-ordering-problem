@@ -17,14 +17,15 @@ IterativeImprovement::run(Instance& instance)
 {
     Solution solution = initial_solution(initial_solution_rule, instance);
     Solution last_solution = Solution(instance.size());
-    int iteration = 0;
-
+    int iteration = 1;
+    
     while (local_optimum_criterion_is_not_satisfied(last_solution, solution))
     {
         last_solution = solution;
         solution = improvement(pivoting_rule, neighbourhood_rule, instance, solution);
-        std::cout << "Iteration: " << iteration << " Score: " << solution.score() << std::endl;
+        // std::cout << "Iteration: " << iteration << " Score: " << solution.score() << std::endl;
         iteration++;
     }
+    
     instance.set_solution(solution);
 }

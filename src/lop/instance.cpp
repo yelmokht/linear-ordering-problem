@@ -16,10 +16,6 @@ Instance::Instance(std::string filepath)
     check_file(filepath);
     save_matrix(filepath);
     save_best_known_score(BEST_KNOWN_FILE_PATH);
-    if (VERBOSE) {
-        print();
-    }
-
 }
 
 Instance::~Instance() {}
@@ -87,29 +83,33 @@ Instance::save_best_known_score(std::string filepath)
     }
 }
 
-// void
-// Instance::save_termination_criterion(std::string filepath_1, std::string filepath_2)
-// {
-//     auto average_computation_time_1;
-//     auto average_computation_time_2;
-//     std::ofstream filestream(filepath_1);
-//     if (!filestream.is_open()) {
-//         std::cerr << "Error: could not open file " << filepath_1 << std::endl;
-//         exit(1);
-//     }
-//     auto average_computation_time_1 = (find instance name in col 1 then read col 5)
-//     filestream.close();
+void
+Instance::save_max_runtime()
+{
+    std::string filepath = MAX_RUNTIME_FILE_PATH;
+    std::ifstream filestream(filepath);
+    if (!filestream.is_open()) {
+        std::cerr << "Error: could not open file " << filepath << std::endl;
+        exit(1);
+    }
 
-//     filestream.open(filepath_2);
-//     if (!filestream.is_open()) {
-//         std::cerr << "Error: could not open file " << filepath_2 << std::endl;
-//         exit(1);
-//     }
-//     auto average_computation_time_2 = (find instance name in col 1 then read col 5)
-//     filestream.close();
+    std::string line;
+    while (std::getline(filestream, line)) {
+        std::stringstream ss(line);
+        std::string name;
+        double max_runtime;
+        ss >> name >> max_runtime;
+        if (name == this->name_) {
+            this->max_runtime_ = max_runtime;
+            break;
+        }
+    }
 
-//     this->termination_criterion = ((average_computation_time_1 + average_computation_time_2)/2)*100;
-// }
+    if (this->max_runtime_ == 0) {
+        std::cerr << "Error: could not find max runtime for instance " << this->name_ << std::endl;
+        exit(1);
+    }
+}
 
 std::string
 Instance::name() const
@@ -159,11 +159,11 @@ Instance::relative_percentage_deviation() const
     return this->relative_percentage_deviation_;
 }
 
-// double
-// Instance::termination_criterion() const
-// {
-//     return this->termination_criterion;
-// }
+double
+Instance::max_runtime() const
+{
+    return this->max_runtime_;
+}
 
 void
 Instance::set_solution(Solution solution)
@@ -181,7 +181,7 @@ Instance::set_computation_time(double computation_time)
 void
 Instance::print()
 {
-	std::cout 	<< name()<< " "
+	std::cout 	<< name() << " "
 				<< solution().score() << " "
 				<< best_known_score() << " "
 				<< relative_percentage_deviation() << " "
@@ -193,10 +193,24 @@ int
 Instance::evaluate(Solution& solution)
 {
     int score = 0;
+    auto permutation = solution.permutation();
     for (int i = 0; i < size(); i++) {
         for (int j = i + 1; j < size(); j++) {
-            score += matrix_[solution.permutation()[i]][solution.permutation()[j]];
+            score += matrix_[permutation[i]][permutation[j]];
         }
     }
     return score;
+}
+
+void
+Instance::permute(Solution& solution)
+{
+    auto permutation = solution.permutation();
+    auto new_matrix = std::vector<std::vector<int>>(size_, std::vector<int>(size_));
+    for (int i = 0; i < size(); i++) {
+        for (int j = 0; j < size(); j++) {
+            new_matrix[i][j] = matrix_[permutation[i]][permutation[j]];
+        }
+    }
+    matrix_ = new_matrix;
 }

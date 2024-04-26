@@ -1,42 +1,27 @@
 #include "iterated_local_search.hpp"
+#include "../rules/initial_solution.hpp"
+#include "../rules/local_search.hpp"
+#include "../rules/criterion.hpp"
 
-IteratedLocalSearch::IteratedLocalSearch() 
+IteratedLocalSearch::IteratedLocalSearch(InitialSolution initial_solution_rule, LocalSearch local_search_rule, Perturbation perturbation_rule) 
 {
-
+    this->initial_solution_rule = initial_solution_rule;
+    this->local_search_rule = local_search_rule;
+    this->perturbation_rule = perturbation_rule;
 }
 
 void
-IteratedLocalSearch::local_search(Pivoting pivoting_rule, Instance& instance, Solution& solution)
+IteratedLocalSearch::run(Instance& instance)
 {
-    // // Local search based on insertion
-    // insert(pivoting_rule, instance);
-}
-
-// Perturbation based on exchange
-void
-IteratedLocalSearch::perturbation(Pivoting pivoting_rule, Instance& instance, Solution& solution)
-{
-    // exchange(pivoting_rule, instance)
-}
-
-// Run the iterated local search
-void
-IteratedLocalSearch::run(Pivoting pivoting_rule, Instance& instance)
-{
-    // auto terminal_criterion = instance.termination_criterion()
-    // std::vector<Permutation> previous_permutations;
-    // auto permutation = instance.solution(); //Generate initial solution
-    // auto best_permutation = local_search(pivoting_rule, instance, permutation);
-    // auto time = std::chrono::high_resolution_clock::now();
-    // auto elapsed;
-    // while (termination_criterion_is_not_satisfied(terminal_criterion, elapsed)) {
-    //     auto new_permutation = perturbation(pivoting_rule, instance, best_permutation);
-    //     new_permutation = local_search(pivoting_rule, instance, new_permutation);
-    //     if (acceptance_criterion_is_satisfied(previous_permutations, best_permutation, new_permutation)) {
-    //         best_permutation = new_permutation;
-    //     }
-    //     elapsed = std::chrono::high_resolution_clock::now() - time;
-    // }
-
-    // instance.set_solution(best_permutation);
+    Solution solution = initial_solution(initial_solution_rule, instance);
+    // solution = local_search(instance, solution, local_search_rule);
+    auto max_runtime = instance.max_runtime();
+    auto start_time = std::chrono::high_resolution_clock::now();
+    double elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start_time).count();
+    
+    while (terminal_criterion_is_not_satisfied(elapsed_time, max_runtime))
+    {
+    
+        elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start_time).count();
+    }
 }

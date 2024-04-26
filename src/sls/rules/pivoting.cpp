@@ -8,41 +8,53 @@
 #include "../../lop/configuration.hpp"
 
 
-Solution&
-first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
+Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
 {
-    for (int i = 0; i < instance.size(); i++) {
-        for (int j = 0; j < instance.size(); j++) {
+    std::pair<unsigned int, unsigned int> kl = solution.last_neighbour();
+    unsigned k = kl.first;
+    unsigned l = kl.second;
 
-            Solution new_solution = neighbourhood(neighbourhood_rule, instance, solution, i, j);
+    for (unsigned i = k; i < instance.size(); i++) {
+        for (unsigned j = l; j < instance.size(); j++) {
 
-            if (new_solution.score() > solution.score()) {
-                solution = new_solution;
-                return solution;
+            if (neighbourhood_is_valid(neighbourhood_rule, i, j)) {
+                int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
+
+                if (new_score > solution.score()) {
+                    // std::cout << "i: " << i << " j: " << j << " new_score: " << new_score << std::endl;
+                    solution = apply_permutation(neighbourhood_rule, solution, i, j);
+                    solution.set_score(new_score);
+                    solution.set_last_neighbour({i, j});
+                    return solution;
+                }
             }
         }
+    }
+
+    if (l != 0) {
+        solution.set_last_neighbour({0, 0});
+        first_improvement(neighbourhood_rule, instance, solution);
     }
 
     return solution;
 }
 
-Solution&
-best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
+Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
 {
-    Solution best_solution = solution;
+    for (unsigned i = 0; i < instance.size(); i++) {
+        for (unsigned j = 0; j < instance.size(); j++) {
 
-    for (int i = 0; i < instance.size(); i++) {
-        for (int j = 0; j < instance.size(); j++) {
+            if (neighbourhood_is_valid(neighbourhood_rule, i, j)) {
+                int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
 
-            Solution new_solution = neighbourhood(neighbourhood_rule, instance, solution, i, j);
-
-            if (new_solution.score() > best_solution.score()) {
-                best_solution = new_solution;
+                if (new_score > solution.score()) {
+                    apply_permutation(neighbourhood_rule, solution, i, j);
+                    solution.set_score(new_score);
+                }
             }
         }
     }
 
-    solution = best_solution;
     return solution;
 }
 
@@ -51,9 +63,9 @@ Solution& improvement(Pivoting pivoting_rule, Neighbourhood neighbourhood_rule, 
 {
     switch (pivoting_rule)
     {
-    case FIRST:
+    case Pivoting::FIRST:
         return first_improvement(neighbourhood_rule, instance, solution);
-    case BEST:
+    case Pivoting::BEST:
         return best_improvement(neighbourhood_rule, instance, solution);
     default:
         assert(false);

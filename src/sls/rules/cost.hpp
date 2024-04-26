@@ -4,9 +4,9 @@
 #include "../../lop/configuration.hpp"
 
 int cost_function(Instance& instance, Solution& solution);
-int transpose_cost(Instance& instance, Solution& old_solution, int i, int j);
-int exchange_cost(Instance& instance, Solution& old_solution, int i, int j);
-int insert_cost(Instance& instance, Solution& old_solution, int i, int j);
-int evaluate(Neighbourhood neighbourhood_rule, Instance& instance, Solution& old_solution, int i, int j);
+int transpose_delta(Instance& instance, Solution& solution, unsigned i, unsigned j);
+int exchange_delta(Instance& instance, Solution& solution, unsigned i, unsigned j);
+int insert_delta(Instance& instance, Solution& solution, unsigned i, unsigned j);
+int delta(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution, unsigned i, unsigned j);
 
 #endif

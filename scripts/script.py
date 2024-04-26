@@ -1,49 +1,58 @@
-import subprocess
+#!/usr/bin/env python3
+
 import os
+import subprocess
+import shlex
 
-#Exercise 2.1.1
-def run_algorithms():
-    sls_1 = "./lop --ils --bi --insert --first ./statistics/experiments/ils_bi_insert_first.txt"
-    sls_2 = "./lop --ma --bi --insert --constant ./statistics/experiments/ma_bi_insert_constant.txt"
+def experiment(options, output, output_file):
+    options_list = shlex.split(options)
+    for file in sorted(os.listdir("./instances")):
+        command = ["./lop"] + options_list + ["-f", os.path.join("./instances", file)]
+        subprocess.run(command, stdout=output_file, stderr=subprocess.PIPE)
 
-    try:
-        subprocess.run(sls_1, shell=True, check=True)
-        subprocess.run(sls_2, shell=True, check=True)
-        print("Commands executed successfully.")
-    except subprocess.CalledProcessError as e:
-        print("Error executing commands:", e)
+def experiments():
+    experiments_data = [
+        ("-a ii -i random -p first -n transpose", "./statistics/experiments/ii_random_first_transpose.txt"),
+        ("-a ii -i random -p first -n exchange", "./statistics/experiments/ii_random_first_exchange.txt"),
+        ("-a ii -i random -p first -n insert", "./statistics/experiments/ii_random_first_insert.txt"),
+        ("-a ii -i random -p best -n transpose", "./statistics/experiments/ii_random_best_transpose.txt"),
+        ("-a ii -i random -p best -n exchange", "./statistics/experiments/ii_random_best_exchange.txt"),
+        ("-a ii -i random -p best -n insert", "./statistics/experiments/ii_random_best_insert.txt"),
+        ("-a ii -i cw -p first -n transpose", "./statistics/experiments/ii_cw_first_transpose.txt"),
+        ("-a ii -i cw -p first -n exchange", "./statistics/experiments/ii_cw_first_exchange.txt"),
+        ("-a ii -i cw -p first -n insert", "./statistics/experiments/ii_cw_first_insert.txt"),
+        ("-a ii -i cw -p best -n transpose", "./statistics/experiments/ii_cw_best_transpose.txt"),
+        ("-a ii -i cw -p best -n exchange", "./statistics/experiments/ii_cw_best_exchange.txt"),
+        ("-a ii -i cw -p best -n insert", "./statistics/experiments/ii_cw_best_insert.txt"),
+        ("-a vnd -i cw -p first -n transpose-exchange-insert", "./statistics/experiments/vnd_cw_first_transpose-exchange-insert.txt"),
+        ("-a vnd -i cw -p first -n transpose-insert-exchange", "./statistics/experiments/vnd_cw_first_transpose-insert-exchange.txt")
+    ]
+    
+    for options, output in experiments_data:
+        with open(output, "w") as output_file:
+            experiment(options, output, output_file)
 
-#Exercise 2.1.2
 def report(input_file, output_file):
-    filename = os.path.basename(input_file)[:-4]
-    with open(input_file, 'r') as f:
-        sum1 = sum2 = count = 0
-        for line in f:
-            values = line.split()
-            sum1 += float(values[3])
-            sum2 += float(values[4])
-            count += 1
-        with open(output_file, 'a') as out:
-            out.write(f"{filename} {sum1 / count if count > 0 else 0} {sum2}\n")
+    with open(input_file, "r") as infile:
+        filename = os.path.splitext(os.path.basename(input_file))[0]
+        lines = infile.readlines()
+        sum1 = sum(float(line.split()[3]) for line in lines)
+        sum2 = sum(float(line.split()[4]) for line in lines)
+        count = len(lines)
+        avg1 = sum1 / count if count > 0 else 0
+        avg2 = sum2
+        with open(output_file, "a") as outfile:
+            outfile.write(f"{filename} {avg1} {avg2}\n")
 
 def reports():
-    input_dir = "./statistics/experiments"
-    output_file = "./statistics/reports/report.txt"
-    for file in os.listdir(input_dir):
+    for file in os.listdir("./statistics/experiments"):
         if file.endswith(".txt"):
-            report(os.path.join(input_dir, file), output_file)
+            report(os.path.join("./statistics/experiments", file), "./statistics/reports/report.txt")
 
-#Exercise 2.1.3
-def produce_correlation_plots():
-    pass
-
-
-#Exercise 2.1.4
 def statistical_tests():
-    subprocess.run(["Rscript", "statistical_tests.r"])
+    subprocess.run(["./statistical_tests.r"])
 
-#Exercise 2.1.5
-def run_time_distributions():
-    pass
-
-run_algorithms()
+if __name__ == "__main__":
+    experiments()
+    # reports()
+    # statistical_tests()

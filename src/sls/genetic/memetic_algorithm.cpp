@@ -2,33 +2,17 @@
 
 #include "memetic_algorithm.hpp"
 
-MemeticAlgorithm::MemeticAlgorithm(double mutation_rate, int population_size)
+MemeticAlgorithm::MemeticAlgorithm(InitialSolution initial_solution_rule, LocalSearch local_search_rule, Recombination recombination_rule, Mutation mutation_rule, Selection selection_rule)
 {
-    this->mutation_rate = mutation_rate;
-    this->population_size = population_size;
+    this->initial_solution_rule = initial_solution_rule;
+    this->local_search_rule = local_search_rule;
+    this->recombination_rule = recombination_rule;
+    this->mutation_rule = mutation_rule;
+    this->selection_rule = selection_rule;
 }
 
-// void
-// MemeticAlgorithm::local_search(Instance& instance)
-// {
-//     for (auto& permutation : population) {
-//         instance.set_permutation(permutation);
-//         instance.set_solution(compute_cost(instance, permutation));
-//         transpose(Pivoting::RANDOM, instance);
-//     }
-// }
 
-
-// // Implement the memetic algorithm here
 void
 MemeticAlgorithm::run(Instance& instance)
 {
-    auto start = std::chrono::high_resolution_clock::now();
-    // initialize_population(instance);
-    while (std::chrono::duration<double>(std::chrono::high_resolution_clock::now() - start).count() < max_time) {
-        // local_search(instance);
-        // crossover(instance);
-        // mutation(instance);
-        // selection(instance);
-    }
 }

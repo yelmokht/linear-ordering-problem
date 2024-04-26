@@ -3,6 +3,6 @@
 
 #include "../lop/configuration.hpp"
 
-void sls_algorithm(Algorithm algorithm_rule, InitialSolution initial_solution_rule, Neighbourhood neighbourhood_rule, Pivoting pivoting_rule, Instance& instance);
+void sls_algorithm(Configuration& configuration, Instance& instance);
 
 #endif

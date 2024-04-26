@@ -8,121 +8,210 @@
 
 #include "configuration.hpp"
 
-
-/**
- * Constructor for the Configuration class.
-*/
 Configuration::Configuration(int argc, char *argv[]) 
 {
     parse_args(argc, argv);
-    if (VERBOSE) {
-        print();
-    }
+    // print();
 }
 
-
-/**
- * Prints the help message for arguments.
- * 
- * @param status The exit status.
-*/
-// You can add more algorithms, initial solutions, neighbourhoods, and pivoting rules here.
 void
-Configuration::help(int status) 
+Configuration::help(int exit_code)
 {
-  std::cerr << "Usage: ./lop [algorithms or help] [initial_solutions] [neighbourhoods] [improvements] [-i <instance_file>]" << std::endl
-            << std::endl
-            << "Algorithms or help:" << std::endl
-            << "  --ii" << std::endl
-            << "  --vnd" << std::endl
-            << "  --ils" << std::endl
-            << "  --ma" << std::endl
-            << "  --help" << std::endl
-            << std::endl
-            << "Initial solutions:" << std::endl
-            << "  --random (only with --ii)" << std::endl
-            << "  --cw" << std::endl
-            << "  --bi (only with --ils and --ma)" << std::endl
-            << std::endl
-            << "Neighbourhoods:" << std::endl
-            << "  --transpose (only with --ii)" << std::endl
-            << "  --exchange (only with --ii)" << std::endl
-            << "  --insert (only with --ii, --ils and ma)" << std::endl
-            << "  --transpose-exchange-insert (only with --vnd)" << std::endl
-            << "  --transpose-insert-exchange (only with --vnd)" << std::endl
-            << "Improvements:" << std::endl
-            << "  --first " << std::endl
-            << "  --best (only with --ii)" << std::endl
-            << std::endl
-            << std::endl;
-  exit(status);
+    std::cerr << "Usage: ./lop [options]" << std::endl
+              << "Options:" << std::endl
+              << "  -a, --algorithm [options]" << std::endl
+              << "      - ii"   << std::endl
+              << "      - vnd"  << std::endl
+              << "      - ils"  << std::endl
+              << "      - ma"   << std::endl
+              << std::endl
+              << "  -i, --initial-solution [options]" << std::endl
+              << "      - random (only for ii)" << std::endl
+              << "      - cw (only for ii, vnd)" << std::endl
+              << "      - bi (only for ils, ma)" << std::endl
+              << std::endl
+              << "  -p, --pivoting [options]" << std::endl
+              << "      - first (only for ii, vnd)" << std::endl
+              << "      - best (only for ii)" << std::endl
+              << std::endl
+              << "  -n, --neighborhood [options]" << std::endl
+              << "      - transpose (only for ii)" << std::endl
+              << "      - exchange (only for ii)" << std::endl
+              << "      - insert (only for ii)" << std::endl
+              << "      - transpose-exchange-insert (only for vnd)" << std::endl
+              << "      - transpose-insert-exchange (only for vnd)" << std::endl
+              << std::endl
+              << "  -ls, --local-search [options]" << std::endl
+              << "      - insert (only for ils and ma)" << std::endl
+              << std::endl
+              << "  -pb, --perturbation [options]" << std::endl
+              << "      - exchange (only for ils)" << std::endl
+              << std::endl
+              << "  -r, --recombination [options]" << std::endl
+              << "      - ox (only for ma)" << std::endl
+              << "      - pmx (only for ma)" << std::endl
+              << "      - cx (only for ma)" << std::endl
+              << "      - erx (only for ma)" << std::endl
+              << std::endl
+              << "  -m, --mutation [options]" << std::endl
+              << "      - inversion (only for ma)" << std::endl
+              << "      - scramble (only for ma)" << std::endl
+              << "      - insertion (only for ma)" << std::endl
+              << "      - displacement (only for ma)" << std::endl
+              << std::endl
+              << "  -s, --selection [options]" << std::endl
+              << "      - roulette (only for ma)" << std::endl
+              << "      - tournament (only for ma)" << std::endl
+              << std::endl
+              << "  -f, --file [instance file]" << std::endl
+              << std::endl
+              << "  --help [Display this help message]" << std::endl;
+    exit(exit_code);
 }
 
-
-/**
- * Parses the arguments to make a configuration object from it.
- * 
- * @param argc The number of arguments.
- * @param argv The arguments.
-*/
-// You can add more algorithms, initial solutions, neighbourhoods, and pivoting rules here.
-void 
-Configuration::parse_args(int argc, char* argv[])
-{
+void Configuration::parse_args(int argc, char* argv[]) {
     if (argc < 7 || std::string(argv[1]) == "--help") {
         help(0);
     }
 
-    // Either II or VND
-    if (std::string(argv[1]) == "--ii") {
-        this->a = II;
-    } else if (std::string(argv[1]) == "--vnd") {
-        this->a = VND;
-    } else if (std::string(argv[1]) == "--ils") {
-        this->a = ILS;
-    } else if (std::string(argv[1]) == "--ma") {
-        this->a = MA;
+    int argIndex = 1;
+
+    while (argIndex < argc) {
+        std::string option(argv[argIndex]);
+
+        if (option == "-a" || option == "--algorithm") {
+            parse_algorithm_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-i" || option == "--initial-solution") {
+            parse_initial_solution_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-p" || option == "--pivoting") {
+            parse_pivoting_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-n" || option == "--neighborhood") {
+            parse_neighbourhood_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-ls" || option == "--local-search") {
+            parse_local_search_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-pb" || option == "--perturbation") {
+            parse_perturbation_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-r" || option == "--recombination") {
+            parse_recombination_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-m" || option == "--mutation") {
+            parse_mutation_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-s" || option == "--selection") {
+            parse_selection_option(argv[argIndex + 1]);
+            argIndex += 2;
+        } else if (option == "-f" || option == "--file") {
+            if (argIndex + 1 < argc) {
+                this->instance_ = Instance(std::string(argv[argIndex + 1]));
+                argIndex += 2;
+            } else {
+                help(1);
+            }
+        } else {
+            help(1);
+        }
+    }
+}
+
+void Configuration::parse_algorithm_option(std::string option) {
+    if (option == "ii") {
+        this->a = Algorithm::II;
+    } else if (option == "vnd") {
+        this->a = Algorithm::VND;
+    } else if (option == "ils") {
+        this->a = Algorithm::ILS;
+    } else if (option == "ma") {
+        this->a = Algorithm::MA;
     } else {
         help(1);
     }
+}
 
-
-    // Random or Cw
-    if (std::string(argv[2]) == "--random" && this->a == II) {
-        this->i = RANDOM;
-    } else if (std::string(argv[2]) == "--cw") {
-        this->i = CW;
+void Configuration::parse_initial_solution_option(std::string option) {
+    if (option == "random" && this->a == Algorithm::II) {
+        this->i = InitialSolution::RANDOM;
+    } else if (option == "cw" && (this->a == Algorithm::II || this->a == Algorithm::VND)) {
+        this->i = InitialSolution::CW;
+    } else if (option == "bi" && (this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
+        this->i = InitialSolution::BI;
     } else {
         help(1);
     }
+}
 
-    // Transpose, exchange, insert, transpose-exchange-insert, transpose-insert-exchange
-    if (std::string(argv[3]) == "--transpose" && this->a == II) {
-        this->n = TRANSPOSE;
-    } else if (std::string(argv[3]) == "--exchange" && this->a == II) {
-        this->n = EXCHANGE;
-    } else if (std::string(argv[3]) == "--insert" && this->a == II) {
-        this->n = INSERT;
-    } else if (std::string(argv[3]) == "--transpose-exchange-insert" && this->a == VND) {
-        this->n = TRANSPOSE_EXCHANGE_INSERT;
-    } else if (std::string(argv[3]) == "--transpose-insert-exchange" && this->a == VND) {
-        this->n = TRANSPOSE_INSERT_EXCHANGE;
+void Configuration::parse_pivoting_option(std::string option) {
+    if (option == "first" && (this->a == Algorithm::II || this->a == Algorithm::VND)) {
+        this->p = Pivoting::FIRST;
+    } else if (option == "best" && this->a == Algorithm::II) {
+        this->p = Pivoting::BEST;
     } else {
         help(1);
     }
+}
 
-    // First or best
-    if (std::string(argv[4]) == "--first") {
-        this->p = FIRST;
-    } else if (std::string(argv[4]) == "--best" && this->a == II) {
-        this->p = BEST;
+void Configuration::parse_neighbourhood_option(std::string option) {
+    if (option == "transpose" && this->a == Algorithm::II) {
+        this->n = Neighbourhood::TRANSPOSE;
+    } else if (option == "exchange" && this->a == Algorithm::II) {
+        this->n = Neighbourhood::EXCHANGE;
+    } else if (option == "insert" && this->a == Algorithm::II) {
+        this->n = Neighbourhood::INSERT;
+    } else if (option == "transpose-exchange-insert" && this->a == Algorithm::VND) {
+        this->n = Neighbourhood::TRANSPOSE_EXCHANGE_INSERT;
+    } else if (option == "transpose-insert-exchange" && this->a == Algorithm::VND) {
+        this->n = Neighbourhood::TRANSPOSE_INSERT_EXCHANGE;
     } else {
         help(1);
     }
+}
 
-    // Instance file
-    if (std::string(argv[5]) == "-i") {
-        this->instance_ = Instance(std::string(argv[6]));
+void Configuration::parse_local_search_option(std::string option) {
+    if (option == "insert" && (this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
+        this->l = LocalSearch::INSERT;
+    } else {
+        help(1);
+    }
+}
+
+void Configuration::parse_perturbation_option(std::string option) {
+    if (option == "exchange" && this->a == Algorithm::ILS) {
+        this->pb = Perturbation::EXCHANGE;
+    } else {
+        help(1);
+    }
+}
+
+void Configuration::parse_recombination_option(std::string option) {
+    if (option == "ox" && this->a == Algorithm::MA) {
+        this->r = Recombination::OX;
+    } else if (option == "pmx" && this->a == Algorithm::MA) {
+        this->r = Recombination::PMX;
+    } else {
+        help(1);
+    }
+}
+
+void Configuration::parse_mutation_option(std::string option) {
+    if (option == "inversion" && this->a == Algorithm::MA) {
+        this->m = Mutation::INVERSION;
+    } else if (option == "scramble" && this->a == Algorithm::MA) {
+        this->m = Mutation::SCRAMBLE;
+    } else {
+        help(1);
+    }
+}
+
+void Configuration::parse_selection_option(std::string option) {
+    if (option == "roulette" && this->a == Algorithm::MA) {
+        this->s = Selection::ROULETTE;
+    } else if (option == "tournament" && this->a == Algorithm::MA) {
+        this->s = Selection::TOURNAMENT;
     } else {
         help(1);
     }
@@ -153,20 +242,70 @@ Configuration::pivoting() const
     return this->p;
 }
 
+LocalSearch
+Configuration::local_search() const 
+{
+    return this->l;
+}
+
+Perturbation
+Configuration::perturbation() const 
+{
+    return this->pb;
+}
+
+Recombination
+Configuration::recombination() const 
+{
+    return this->r;
+}
+
+Mutation
+Configuration::mutation() const 
+{
+    return this->m;
+}
+
+Selection
+Configuration::selection() const 
+{
+    return this->s;
+}
+
 Instance
 Configuration::instance() 
 {
     return this->instance_;
 }
 
-void 
-Configuration::print() const 
+void Configuration::print() const 
 {
-    std::cerr   << "- Configuration -" << std::endl
-                << "Algorithm: " << algorithm_map[a] << std::endl
-                << "Initial solution rule: " << initial_solution_map[i] << std::endl
-                << "Neighborhood rule: " << neighbourhood_map[n] << std::endl
-                << "Pivoting rule: " << pivoting_map[p] << std::endl
-                << std::endl;
+    std::cerr << "- Configuration -" << std::endl;
+    std::cerr << "Algorithm: " << algorithm_map[static_cast<int>(a)] << std::endl;
+    if (i != InitialSolution::UNDEFINED) {
+        std::cerr << "Initial solution rule: " << initial_solution_map[static_cast<int>(i)] << std::endl;
+    }
+    if (n != Neighbourhood::UNDEFINED) {
+        std::cerr << "Neighborhood rule: " << neighbourhood_map[static_cast<int>(n)] << std::endl;
+    }
+    if (p != Pivoting::UNDEFINED) {
+        std::cerr << "Pivoting rule: " << pivoting_map[static_cast<int>(p)] << std::endl;
+    }
+    if (l != LocalSearch::UNDEFINED) {
+        std::cerr << "Local search rule: " << local_search_map[static_cast<int>(l)] << std::endl;
+    }
+    if (pb != Perturbation::UNDEFINED) {
+        std::cerr << "Perturbation rule: " << perturbation_map[static_cast<int>(pb)] << std::endl;
+    }
+    if (r != Recombination::UNDEFINED) {
+        std::cerr << "Recombination rule: " << recombination_map[static_cast<int>(r)] << std::endl;
+    }
+    if (m != Mutation::UNDEFINED) {
+        std::cerr << "Mutation rule: " << mutation_map[static_cast<int>(m)] << std::endl;
+    }
+    if (s != Selection::UNDEFINED) {
+        std::cerr << "Selection rule: " << selection_map[static_cast<int>(s)] << std::endl;
+    }
+    std::cerr << "Instance: " << instance_.name() << std::endl;
     std::cerr.flush();
 }

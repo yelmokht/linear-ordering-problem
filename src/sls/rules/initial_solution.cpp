@@ -12,7 +12,7 @@ random_solution(Instance& instance)
     Solution random_solution = instance.solution();
     auto random_permutation = random_solution.permutation();
     std::iota(random_permutation.begin(), random_permutation.end(), 0);
-    std::shuffle(random_permutation.begin(), random_permutation.end(), std::default_random_engine(instance.seed()));
+    std::shuffle(random_permutation.begin(), random_permutation.end(), std::mt19937(instance.seed()));
     random_solution.set_permutation(random_permutation);
     random_solution.set_score(instance.evaluate(random_solution));
     return random_solution;
@@ -57,9 +57,9 @@ initial_solution(InitialSolution initial_solution_rule, Instance& instance)
 {
     switch (initial_solution_rule)
     {
-    case RANDOM:
+    case InitialSolution::RANDOM:
         return random_solution(instance);
-    case CW:
+    case InitialSolution::CW:
         return cw_solution(instance);
     default:
         assert(false);

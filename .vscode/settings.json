@@ -55,5 +55,6 @@
         "sstream": "cpp",
         "fstream": "cpp",
         "cassert": "cpp"
-    }
+    },
+    "remote.autoForwardPortsFallback": 0
 }

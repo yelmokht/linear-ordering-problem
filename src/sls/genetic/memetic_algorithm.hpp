@@ -8,18 +8,17 @@
 class MemeticAlgorithm
 {
     private:
-        double mutation_rate;
-        int population_size;
-        std::vector<Solution> population; //of population_size
+        InitialSolution initial_solution_rule;
+        LocalSearch local_search_rule;
+        Recombination recombination_rule;
+        Mutation mutation_rule;
+        Selection selection_rule;
+        double mutation_rate = 0.2;
+        int population_size = 100;
         double max_time;
 
     public:
-        MemeticAlgorithm(double mutation_rate, int population_size);
-        // void initialize_population(Instance& instance);
-        // void local_search(Instance& instance);
-        // void crossover(Instance& instance);
-        // void mutation(Instance& instance);
-        // void selection(Instance& instance);
+        MemeticAlgorithm(InitialSolution initial_solution_rule, LocalSearch local_search_rule, Recombination recombination_rule, Mutation mutation_rule, Selection selection_rule);
         void run(Instance& instance);
 };
 
