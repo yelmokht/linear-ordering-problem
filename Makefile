@@ -15,6 +15,12 @@ lop: $(OBJECTS)
 statistics: lop
 	./scripts/script.py
 
+runtime:
+	./scripts/compute_max_runtime.py
+
+run: runtime
+	./scripts/script_2.py
+
 clean:
 	find src -type f -name '*.o' -delete
 	rm -f lop

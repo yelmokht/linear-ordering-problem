@@ -88,6 +88,7 @@ Instance::save_max_runtime()
 {
     std::string filepath = MAX_RUNTIME_FILE_PATH;
     std::ifstream filestream(filepath);
+
     if (!filestream.is_open()) {
         std::cerr << "Error: could not open file " << filepath << std::endl;
         exit(1);
