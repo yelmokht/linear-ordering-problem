@@ -33,26 +33,29 @@ def experiments():
             experiment(options, output, output_file)
 
 def report(input_file, output_file):
+    filename = os.path.splitext(os.path.basename(input_file))[0]
     with open(input_file, "r") as infile:
-        filename = os.path.splitext(os.path.basename(input_file))[0]
         lines = infile.readlines()
         sum1 = sum(float(line.split()[3]) for line in lines)
         sum2 = sum(float(line.split()[4]) for line in lines)
         count = len(lines)
-        avg1 = sum1 / count if count > 0 else 0
-        avg2 = sum2
-        with open(output_file, "a") as outfile:
-            outfile.write(f"{filename} {avg1} {avg2}\n")
+        avg1 = "{:.6f}".format(sum1 / count) if count > 0 else "0.000000"
+        avg2 = "{:.6f}".format(sum2)
+
+    with open(output_file, "a") as outfile:
+        outfile.write(f"{filename} {avg1} {avg2}\n")
 
 def reports():
-    for file in os.listdir("./statistics/experiments"):
+    with open("./statistics/reports/report.txt", "w") as output_file:
+        pass
+    for file in sorted(os.listdir("./statistics/experiments")):
         if file.endswith(".txt"):
             report(os.path.join("./statistics/experiments", file), "./statistics/reports/report.txt")
 
 def statistical_tests():
-    subprocess.run(["./statistical_tests.r"])
+    subprocess.run(["./scripts/statistical_tests.r"])
 
 if __name__ == "__main__":
-    experiments()
-    # reports()
-    # statistical_tests()
+    # experiments()
+    reports()
+    statistical_tests()

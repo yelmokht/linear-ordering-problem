@@ -1,0 +1,14 @@
+ii_cw_best_exchange 3.599978 597.414960
+ii_cw_best_insert 2.047348 1411.415310
+ii_cw_best_transpose 21.691885 4.334982
+ii_cw_first_exchange 3.101886 912.805130
+ii_cw_first_insert 2.112224 4423.643130
+ii_cw_first_transpose 21.691885 4.564989
+ii_random_best_exchange 3.605584 601.300970
+ii_random_best_insert 2.258203 1399.975240
+ii_random_best_transpose 34.405406 3.119320
+ii_random_first_exchange 3.211028 967.990220
+ii_random_first_insert 2.118801 4114.198390
+ii_random_first_transpose 34.405406 3.611512
+vnd_cw_first_transpose-exchange-insert 2.659564 1970.800620
+vnd_cw_first_transpose-insert-exchange 2.648705 1352.991960

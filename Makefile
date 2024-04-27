@@ -16,6 +16,6 @@ statistics: lop
 	./scripts/script.py
 
 clean:
-	rm -f src/*~ src/*.o src/rules/*.o statistics/*/*.txt lop
 	find src -type f -name '*.o' -delete
+	rm -f lop
 

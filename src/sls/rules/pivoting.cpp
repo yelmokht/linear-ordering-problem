@@ -21,7 +21,7 @@ Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance
                 int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
 
                 if (new_score > solution.score()) {
-                    // std::cout << "i: " << i << " j: " << j << " new_score: " << new_score << std::endl;
+                    std::cout << "i: " << i << " j: " << j << " new_score: " << new_score << std::endl;
                     solution = apply_permutation(neighbourhood_rule, solution, i, j);
                     solution.set_score(new_score);
                     solution.set_last_neighbour({i, j});
@@ -31,10 +31,10 @@ Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance
         }
     }
 
-    if (l != 0) {
-        solution.set_last_neighbour({0, 0});
-        first_improvement(neighbourhood_rule, instance, solution);
-    }
+    // if (l != 0) {
+    //     solution.set_last_neighbour({0, 0});
+    //     first_improvement(neighbourhood_rule, instance, solution);
+    // }
 
     return solution;
 }

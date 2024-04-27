@@ -45,7 +45,8 @@ VariableNeighbourhoodDescent::run(Instance& instance)
         } else {
             // std::cout << "No improvement, trying next neighbourhood" << std::endl;
             i++;
-            // std::cout << "Neighbourhood " << i << std::endl;
+            solution.set_last_neighbour({0, 0});
+            std::cout << "Neighbourhood " << i << std::endl;
         }
     }
     instance.set_solution(solution);

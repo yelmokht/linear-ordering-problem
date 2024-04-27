@@ -20,7 +20,7 @@ exchange_is_valid(unsigned i, unsigned j)
 bool
 insert_is_valid(unsigned i, unsigned j)
 {
-    return i != j;
+    return i != j && i != j + 1;
 }
 
 bool
