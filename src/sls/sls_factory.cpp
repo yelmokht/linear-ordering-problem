@@ -29,11 +29,11 @@ sls_algorithm(Configuration& configuration, Instance& instance)
         break;
     case Algorithm::ILS:
         instance.save_max_runtime();
-        // IteratedLocalSearch(initial_solution_rule, local_search_rule, perturbation_rule).run(instance);
+        IteratedLocalSearch(initial_solution_rule, local_search_rule, perturbation_rule).run(instance);
         break;
     case Algorithm::MA:
         instance.save_max_runtime();
-        // MemeticAlgorithm(initial_solution_rule, local_search_rule, recombination_rule, mutation_rule, selection_rule).run(instance);
+        MemeticAlgorithm(initial_solution_rule, local_search_rule, recombination_rule, mutation_rule, selection_rule).run(instance);
         break;
     default:
         assert(false);

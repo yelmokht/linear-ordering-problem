@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 
 #include "cost.hpp"
 
@@ -31,9 +32,10 @@ int exchange_delta(Instance& instance, Solution& solution, unsigned i, unsigned 
     unsigned l = permutation[j];
     int delta = matrix[l][k] - matrix[k][l];
 
-    for (unsigned m = i + 1 ; m < j ; m++) {
-        delta += matrix[l][permutation[m]] - matrix[k][permutation[m]];
-        delta += matrix[permutation[m]][k] - matrix[permutation[m]][l];
+    for (unsigned m = i+1; m < j; m++) {
+        unsigned n = permutation[m];
+        delta += matrix[l][n] - matrix[k][n];
+        delta += matrix[n][k] - matrix[n][l];
     }
 
     return delta;
@@ -50,7 +52,8 @@ int insert_delta(Instance& instance, Solution& solution, unsigned i, unsigned j)
             delta += matrix[permutation[m]][k] - matrix[k][permutation[m]];
         }
     }
-    else if (i > j) {
+    
+    if (i > j) {
         for (unsigned m = j ; m <= i - 1 ; m++) {
             delta += matrix[k][permutation[m]] - matrix[permutation[m]][k];
         }

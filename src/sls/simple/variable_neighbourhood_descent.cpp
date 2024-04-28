@@ -33,21 +33,18 @@ VariableNeighbourhoodDescent::run(Instance& instance)
 {
     auto solution = initial_solution(initial_solution_rule, instance);
     auto last_solution = solution;
+    auto iteration = 1;
     int i = 0;
     while (i < 3) {
         improvement(pivoting_rule, neighbourhood_rules[i], instance, solution);
-
+        // std::cout << "Iteration: " << iteration << " Score: " << solution.score() << std::endl;
         if (solution.score() > last_solution.score()) {
             last_solution = solution;
-            // std::cout << "New best solution: " << solution.score() << std::endl;
-            // std::cout << "Back to neighbourhood 0" << std::endl;
             i = 0;
         } else {
-            // std::cout << "No improvement, trying next neighbourhood" << std::endl;
             i++;
-            solution.set_last_neighbour({0, 0});
-            std::cout << "Neighbourhood " << i << std::endl;
         }
+        iteration++;
     }
     instance.set_solution(solution);
 }

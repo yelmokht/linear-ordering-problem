@@ -10,37 +10,6 @@
 
 Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
 {
-    std::pair<unsigned int, unsigned int> kl = solution.last_neighbour();
-    unsigned k = kl.first;
-    unsigned l = kl.second;
-
-    for (unsigned i = k; i < instance.size(); i++) {
-        for (unsigned j = l; j < instance.size(); j++) {
-
-            if (neighbourhood_is_valid(neighbourhood_rule, i, j)) {
-                int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
-
-                if (new_score > solution.score()) {
-                    // std::cout << "i: " << i << " j: " << j << " new_score: " << new_score << std::endl;
-                    solution = apply_permutation(neighbourhood_rule, solution, i, j);
-                    solution.set_score(new_score);
-                    solution.set_last_neighbour({i, j});
-                    return solution;
-                }
-            }
-        }
-    }
-
-    // if (l != 0) {
-    //     solution.set_last_neighbour({0, 0});
-    //     first_improvement(neighbourhood_rule, instance, solution);
-    // }
-
-    return solution;
-}
-
-Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
-{
     for (unsigned i = 0; i < instance.size(); i++) {
         for (unsigned j = 0; j < instance.size(); j++) {
 
@@ -48,13 +17,40 @@ Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance,
                 int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
 
                 if (new_score > solution.score()) {
-                    apply_permutation(neighbourhood_rule, solution, i, j);
+                    solution = apply_permutation(neighbourhood_rule, solution, i, j);
                     solution.set_score(new_score);
+
                 }
             }
         }
     }
 
+    return solution;
+}
+
+Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
+{
+    int best_score = solution.score();
+    unsigned best_i = 0;
+    unsigned best_j = 0;
+
+    for (unsigned i = 0; i < instance.size(); i++) {
+        for (unsigned j = 0; j < instance.size(); j++) {
+
+            if (neighbourhood_is_valid(neighbourhood_rule, i, j)) {
+                int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
+
+                if (new_score > best_score) {
+                    best_score = new_score;
+                    best_i = i;
+                    best_j = j;
+                }
+            }
+        }
+    }
+
+    solution = apply_permutation(neighbourhood_rule, solution, best_i, best_j);
+    solution.set_score(best_score);
     return solution;
 }
 

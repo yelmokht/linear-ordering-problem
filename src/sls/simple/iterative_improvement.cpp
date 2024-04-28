@@ -23,7 +23,7 @@ IterativeImprovement::run(Instance& instance)
     {
         last_solution = solution;
         solution = improvement(pivoting_rule, neighbourhood_rule, instance, solution);
-        // std::cout << "Iteration: " << iteration << " Score: " << solution.score() << std::endl;
+        std::cout << "Iteration: " << iteration << " Score: " << solution.score() << std::endl;
         iteration++;
     }
     

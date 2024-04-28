@@ -53,6 +53,50 @@ cw_solution(Instance& instance)
 }
 
 Solution
+bi_solution(Instance& instance) 
+{
+    auto matrix = instance.matrix();
+    auto k = instance.size();
+    Solution bi_solution = instance.solution();
+    auto bi_permutation = bi_solution.permutation();
+    std::iota(bi_permutation.begin(), bi_permutation.end(), 0);
+    
+    for (int l = 0; l < k; l++) {
+        std::vector<int> q(k);
+
+        for (int t = 0; t <= k; t++) {
+            int sum_1 = 0;
+            int sum_2 = 0;
+
+            for (int j = 0; j < t; j++) {
+                sum_1 += matrix[j][bi_permutation[l]];
+            }
+
+            for (int j = t; j < k; j++) {
+                sum_2 += matrix[bi_permutation[l]][j];
+            }
+
+            q[t] = sum_1 + sum_2;
+        }
+
+        unsigned best_position = distance(q.begin(), max_element(q.begin(), q.end()));
+
+        std::cout << "Best position: " << best_position << std::endl;
+
+        if (best_position != l) {
+            std::swap(bi_permutation[l], bi_permutation[best_position]);
+        }
+
+    }
+
+    bi_solution.set_permutation(bi_permutation);
+    bi_solution.set_score(instance.evaluate(bi_solution));
+    std::cout << "score: " << bi_solution.score() << "\n";
+    bi_solution.print();
+    return bi_solution;
+}
+
+Solution
 initial_solution(InitialSolution initial_solution_rule, Instance& instance)
 {
     switch (initial_solution_rule)
@@ -61,6 +105,8 @@ initial_solution(InitialSolution initial_solution_rule, Instance& instance)
         return random_solution(instance);
     case InitialSolution::CW:
         return cw_solution(instance);
+    case InitialSolution::BI:
+        return bi_solution(instance);
     default:
         assert(false);
     }
