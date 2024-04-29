@@ -1,4 +1,5 @@
 #include <cassert>
+#include <iostream>
 
 #include "recombination.hpp"
 #include "crossover.hpp"
@@ -13,7 +14,7 @@ Population cx_recombination(Instance& instance, Population& population)
             Solution parent_1 = population.solution(i);
             Solution parent_2 = population.solution(i + 1);
 
-            std::pair<Solution, Solution> offsprings = cx(parent_1, parent_2);
+            std::pair<Solution, Solution> offsprings = cx(instance, parent_1, parent_2);
             Solution offspring_1 = offsprings.first;
             Solution offspring_2 = offsprings.second;
 

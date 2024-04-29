@@ -16,8 +16,5 @@ termination_criterion_is_not_satisfied(double elapsed_time, double max_runtime)
 bool
 acceptance_criterion_is_not_satisfied(Solution& last_solution, Solution& new_solution)
 {
-
-    std::cout << "Last solution: " << last_solution.score() << std::endl;
-    std::cout << "New solution: " << new_solution.score() << std::endl;
     return (last_solution == new_solution);
 }

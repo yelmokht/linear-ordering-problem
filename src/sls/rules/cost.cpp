@@ -3,7 +3,7 @@
 
 #include "cost.hpp"
 
-int cost_function(Instance& instance, Solution& solution) {
+int evaluate(Instance& instance, Solution& solution) {
     auto matrix = instance.matrix();
     auto permutation = solution.permutation();
     int size = instance.size();

@@ -9,7 +9,7 @@ Population random_initialisation(Instance& instance, int population_size) {
 
     for (int i = 0; i < population_size; i++) {
         Solution solution(instance.size());
-        solution = random_solution(instance);
+        solution = random_r_solution(instance);
         population.set_solution(i, solution);
     }
 

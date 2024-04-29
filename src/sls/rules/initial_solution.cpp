@@ -64,6 +64,16 @@ Solution random_solution(Instance& instance) {
     return random_solution;
 }
 
+Solution random_r_solution(Instance& instance) {
+    Solution random_solution = instance.solution();
+    auto random_permutation = random_solution.permutation();
+    std::iota(random_permutation.begin(), random_permutation.end(), 0);
+    std::shuffle(random_permutation.begin(), random_permutation.end(), std::mt19937(rand()));
+    random_solution.set_permutation(random_permutation);
+    random_solution.set_score(instance.evaluate(random_solution));
+    return random_solution;
+}
+
 Solution
 bi_solution(Instance& instance) 
 {

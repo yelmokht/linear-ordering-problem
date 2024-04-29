@@ -141,9 +141,9 @@ void Configuration::parse_algorithm_option(std::string option) {
 }
 
 void Configuration::parse_initial_solution_option(std::string option) {
-    if (option == "random_seed" && (this->a == Algorithm::II)) {
+    if (option == "random_seed" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::RANDOM_SEED;
-    } else if (option == "cw" && (this->a == Algorithm::II || this->a == Algorithm::VND)) {
+    } else if (option == "cw" && (this->a == Algorithm::II || this->a == Algorithm::VND || this->a == Algorithm::ILS)) {
         this->i = InitialSolution::CW;
     } else if (option == "bi" && (this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::BI;

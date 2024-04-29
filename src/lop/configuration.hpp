@@ -40,7 +40,13 @@ enum class Pivoting {
 
 enum class LocalSearch {
     UNDEFINED = -1,
-    INSERT
+    KLE,
+    KLI,
+    LOCAL_ENUM,
+    EXCHANGE,
+    INSERT,
+    OPT2,
+    OPT3,
 };
 
 enum class Perturbation {

@@ -2,17 +2,24 @@
 
 #include "mutation.hpp"
 #include "../../rules/neighbourhood.hpp"
+#include "../../rules/cost.hpp"
 
 Population exchange_mutation(Instance& instance, Population& population, double mutation_rate) {
     Population mutated_population(population.size());
 
     for (int i = 0; i < population.size(); i++) {
-        float rng = static_cast<float>(rand() % 100) / 100.0f; // Use static_cast for type conversion
+        float rng = static_cast<float>(rand() % 100) / 100.0f;
         if (rng <= mutation_rate) {
             Solution solution = population.solution(i);
             int gene_index_1 = rand() % instance.size();
             int gene_index_2 = rand() % instance.size();
+            while (!neighbourhood_is_valid(Neighbourhood::EXCHANGE, gene_index_1, gene_index_2)) {
+                gene_index_1 = rand() % instance.size();
+                gene_index_2 = rand() % instance.size();
+            }
             Solution mutated_solution = exchange(solution, gene_index_1, gene_index_2);
+            // mutated_solution.set_score(solution.score() + exchange_delta(instance, solution, gene_index_1, gene_index_2));
+            mutated_solution.set_score(evaluate(instance, mutated_solution));
             mutated_population.set_solution(i, mutated_solution);
         } else {
             mutated_population.set_solution(i, population.solution(i));

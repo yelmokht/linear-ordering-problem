@@ -17,7 +17,7 @@ void
 IteratedLocalSearch::run(Instance& instance)
 {
     Solution solution = initial_solution(initial_solution_rule, instance);
-    // solution = local_search(local_search_rule, instance, solution);
+    solution = local_search(local_search_rule, instance, solution);
     auto iteration = 1;
     auto max_runtime = instance.max_runtime();
     auto start_time = std::chrono::high_resolution_clock::now();
@@ -27,14 +27,15 @@ IteratedLocalSearch::run(Instance& instance)
     {
         Solution last_solution = solution;
         solution = perturbation(perturbation_rule, instance, solution);
-        // solution = local_search(local_search_rule, instance, solution);
+        solution = local_search(local_search_rule, instance, solution);
         if (acceptance_criterion_is_not_satisfied(last_solution, solution)) {
-            std::cout << "Acceptance criterion not satisfied" << std::endl;
             solution = last_solution;
         }
 
         elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start_time).count();
-        std::cout << "Iteration: " << iteration << " Score: " << solution.score() << " Elapsed time: " << elapsed_time << std::endl << " Max runtime: " << max_runtime << std::endl << std::endl;
+        std::cout << "Iteration: " << iteration << " Score: " << solution.score() << " Elapsed time: " << elapsed_time << std::endl;
         iteration++;
     }
+
+    instance.set_solution(solution);
 }
