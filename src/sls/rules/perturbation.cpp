@@ -5,7 +5,7 @@
 
 Solution& exchange(Instance& instance, Solution& solution)
 {
-    return best_improvement(Neighbourhood::EXCHANGE, instance, solution);
+    return first_improvement(Neighbourhood::EXCHANGE, instance, solution);
 }
 
 Solution& perturbation(Perturbation pertubartion_rule, Instance& instance, Solution& solution)

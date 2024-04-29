@@ -1,8 +1,15 @@
 #ifndef MUTATION_HPP
 #define MUTATION_HPP
 
-// #include "sls/genetic/memetic_algorithm.hpp"
+#include "../../../lop/configuration.hpp"
+#include "../../../lop/population.hpp"
 
-// void random_interchange_mutation(Population& population, Instance& instance);
+
+Population exchange_mutation(Instance& instance, Population& population, double mutation_rate);
+Population insert_mutation(Instance& instance, Population& population, double mutation_rate);
+Population invert_mutation(Instance& instance, Population& population, double mutation_rate);
+Population scramble_mutation(Instance& instance, Population& population, double mutation_rate);
+Population swap_mutation(Instance& instance, Population& population, double mutation_rate);
+Population mutation(Mutation mutation_rule, Instance& instance, Population& population, double mutation_rate);
 
 #endif

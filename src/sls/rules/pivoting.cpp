@@ -19,7 +19,7 @@ Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance
                 if (new_score > solution.score()) {
                     solution = apply_permutation(neighbourhood_rule, solution, i, j);
                     solution.set_score(new_score);
-
+                    return solution;
                 }
             }
         }

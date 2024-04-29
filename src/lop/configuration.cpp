@@ -26,7 +26,7 @@ Configuration::help(int exit_code)
               << "      - ma"   << std::endl
               << std::endl
               << "  -i, --initial-solution [options]" << std::endl
-              << "      - random (only for ii)" << std::endl
+              << "      - random (only for ii, ils, ma)" << std::endl
               << "      - cw (only for ii, vnd)" << std::endl
               << "      - bi (only for ils, ma)" << std::endl
               << std::endl
@@ -48,20 +48,27 @@ Configuration::help(int exit_code)
               << "      - exchange (only for ils)" << std::endl
               << std::endl
               << "  -r, --recombination [options]" << std::endl
+              << "      - cx (only for ma)" << std::endl
+              << "      - dpx (only for ma)" << std::endl
+              << "      - ob (only for ma)" << std::endl
+              << "      - op (only for ma)" << std::endl
               << "      - ox (only for ma)" << std::endl
               << "      - pmx (only for ma)" << std::endl
-              << "      - cx (only for ma)" << std::endl
-              << "      - erx (only for ma)" << std::endl
+              << "      - po (only for ma)" << std::endl
+              << "      - rank (only for ma)" << std::endl
               << std::endl
               << "  -m, --mutation [options]" << std::endl
+              << "      - exchange (only for ma)" << std::endl
+              << "      - insert (only for ma)" << std::endl
               << "      - inversion (only for ma)" << std::endl
               << "      - scramble (only for ma)" << std::endl
-              << "      - insertion (only for ma)" << std::endl
-              << "      - displacement (only for ma)" << std::endl
+              << "      - swap (only for ma)" << std::endl
               << std::endl
               << "  -s, --selection [options]" << std::endl
+              << "      - rank (only for ma)" << std::endl
               << "      - roulette (only for ma)" << std::endl
               << "      - tournament (only for ma)" << std::endl
+              << "      - uniform (only for ma)" << std::endl
               << std::endl
               << "  -f, --file [instance file]" << std::endl
               << std::endl
@@ -134,12 +141,14 @@ void Configuration::parse_algorithm_option(std::string option) {
 }
 
 void Configuration::parse_initial_solution_option(std::string option) {
-    if (option == "random" && this->a == Algorithm::II) {
-        this->i = InitialSolution::RANDOM;
+    if (option == "random_seed" && (this->a == Algorithm::II)) {
+        this->i = InitialSolution::RANDOM_SEED;
     } else if (option == "cw" && (this->a == Algorithm::II || this->a == Algorithm::VND)) {
         this->i = InitialSolution::CW;
     } else if (option == "bi" && (this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::BI;
+    } else if (option == "random" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
+        this->i = InitialSolution::RANDOM;
     } else {
         help(1);
     }
@@ -188,30 +197,24 @@ void Configuration::parse_perturbation_option(std::string option) {
 }
 
 void Configuration::parse_recombination_option(std::string option) {
-    if (option == "ox" && this->a == Algorithm::MA) {
-        this->r = Recombination::OX;
-    } else if (option == "pmx" && this->a == Algorithm::MA) {
-        this->r = Recombination::PMX;
+    if (option == "cx" && this->a == Algorithm::MA) {
+        this->r = Recombination::CX;
     } else {
         help(1);
     }
 }
 
 void Configuration::parse_mutation_option(std::string option) {
-    if (option == "inversion" && this->a == Algorithm::MA) {
-        this->m = Mutation::INVERSION;
-    } else if (option == "scramble" && this->a == Algorithm::MA) {
-        this->m = Mutation::SCRAMBLE;
+    if (option == "exchange" && this->a == Algorithm::MA) {
+        this->m = Mutation::EXCHANGE;
     } else {
         help(1);
     }
 }
 
 void Configuration::parse_selection_option(std::string option) {
-    if (option == "roulette" && this->a == Algorithm::MA) {
-        this->s = Selection::ROULETTE;
-    } else if (option == "tournament" && this->a == Algorithm::MA) {
-        this->s = Selection::TOURNAMENT;
+    if (option == "rank" && this->a == Algorithm::MA) {
+        this->s = Selection::RANK;
     } else {
         help(1);
     }

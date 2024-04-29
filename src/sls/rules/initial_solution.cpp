@@ -7,7 +7,7 @@
 #include "initial_solution.hpp"
 
 Solution
-random_solution(Instance& instance) 
+random_seed_solution(Instance& instance) 
 {
     Solution random_solution = instance.solution();
     auto random_permutation = random_solution.permutation();
@@ -52,6 +52,18 @@ cw_solution(Instance& instance)
     return cw_solution;
 }
 
+Solution random_solution(Instance& instance) {
+    Solution random_solution = instance.solution();
+    auto random_permutation = random_solution.permutation();
+    std::iota(random_permutation.begin(), random_permutation.end(), 0);
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(random_permutation.begin(), random_permutation.end(), gen);
+    random_solution.set_permutation(random_permutation);
+    random_solution.set_score(instance.evaluate(random_solution));
+    return random_solution;
+}
+
 Solution
 bi_solution(Instance& instance) 
 {
@@ -81,18 +93,15 @@ bi_solution(Instance& instance)
 
         unsigned best_position = distance(q.begin(), max_element(q.begin(), q.end()));
 
-        std::cout << "Best position: " << best_position << std::endl;
-
-        if (best_position != l) {
-            std::swap(bi_permutation[l], bi_permutation[best_position]);
+        if (best_position != l && best_position != l + 1) {
+            int temp = bi_permutation[l];
+            bi_permutation.erase(bi_permutation.begin() + l);
+            bi_permutation.insert(bi_permutation.begin() + best_position, temp);
         }
-
     }
 
     bi_solution.set_permutation(bi_permutation);
     bi_solution.set_score(instance.evaluate(bi_solution));
-    std::cout << "score: " << bi_solution.score() << "\n";
-    bi_solution.print();
     return bi_solution;
 }
 
@@ -101,12 +110,14 @@ initial_solution(InitialSolution initial_solution_rule, Instance& instance)
 {
     switch (initial_solution_rule)
     {
-    case InitialSolution::RANDOM:
-        return random_solution(instance);
+    case InitialSolution::RANDOM_SEED:
+        return random_seed_solution(instance);
     case InitialSolution::CW:
         return cw_solution(instance);
     case InitialSolution::BI:
         return bi_solution(instance);
+    case InitialSolution::RANDOM:
+        return random_solution(instance);
     default:
         assert(false);
     }

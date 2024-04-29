@@ -8,13 +8,13 @@
 class MemeticAlgorithm
 {
     private:
+        int population_size = 100;
+        double mutation_rate = 0.2;
         InitialSolution initial_solution_rule;
         LocalSearch local_search_rule;
         Recombination recombination_rule;
         Mutation mutation_rule;
         Selection selection_rule;
-        double mutation_rate = 0.2;
-        int population_size = 100;
         double max_time;
 
     public:

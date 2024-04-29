@@ -17,9 +17,10 @@ enum class Algorithm {
 
 enum class InitialSolution {
     UNDEFINED = -1,
-    RANDOM,
+    RANDOM_SEED,
     CW,
-    BI
+    BI,
+    RANDOM
 };
 
 enum class Neighbourhood {
@@ -49,44 +50,54 @@ enum class Perturbation {
 
 enum class Recombination {
     UNDEFINED = -1,
+    CX,
+    DPX,
+    OB,
+    OP,
     OX,
-    PMX
+    PMX,
+    PO,
+    RANK
 };
 
 enum class Mutation {
     UNDEFINED = -1,
-    SWAP,
+    EXCHANGE,
+    INSERT,
+    INVERSION,
     SCRAMBLE,
-    INVERSION
+    SWAP
 };
 
 enum class Selection {
     UNDEFINED = -1,
+    RANK,
     ROULETTE,
-    TOURNAMENT
+    TOURNAMENT,
+    UNIFORM
 };
 
 
 
 const std::string algorithm_map[4] = {"iterative improvement", "variable neighbourhood descent", "iterated local search", "memetic algorithm"};
-const std::string initial_solution_map[3] = {"random", "chenery-watanabe", "best insertion"};
+const std::string initial_solution_map[4] = {"random seed", "chenery-watanabe", "best insertion", "random"};
 const std::string neighbourhood_map[5] = {"transpose", "exchange", "insert", "transpose, exchange, insert", "transpose, insert, exchange"};
 const std::string pivoting_map[2] = {"first", "best"};
 const std::string local_search_map[1] = {"insert"};
 const std::string perturbation_map[1] = {"exchange"};
-const std::string recombination_map[2] = {"order crossover", "partially mapped crossover"};
-const std::string mutation_map[3] = {"swap", "scramble", "inversion"};
-const std::string selection_map[2] = {"roulette", "tournament"};
+const std::string recombination_map[8] = {"cycle crossover", "distribution-based partition crossover", "order based crossover", "one point crossover", "order crossover", "partially mapped crossover", "position crossover", "rank crossover"};
+const std::string mutation_map[5] = {"exchange", "insert", "inversion", "scramble", "swap"};
+const std::string selection_map[4] = {"rank", "roulette", "tournament", "uniform"};
 
 const std::string algorithm_map_short[4] = {"ii", "vnd", "ils", "ma"};
-const std::string initial_solution_map_short[3] = {"random", "cw", "bi"};
+const std::string initial_solution_map_short[4] = {"rs", "cw", "bi", "r"};
 const std::string neighbourhood_map_short[5] = {"transpose", "exchange", "insert", "transpose-exchange-insert", "transpose-insert-exchange"};
 const std::string pivoting_map_short[2] = {"first", "best"};
 const std::string local_search_map_short[1] = {"insert"};
 const std::string perturbation_map_short[1] = {"exchange"};
-const std::string recombination_map_short[2] = {"ox", "pmx"};
-const std::string mutation_map_short[3] = {"swap", "scramble", "inversion"};
-const std::string selection_map_short[2] = {"roulette", "tournament"};
+const std::string recombination_map_short[8] = {"cx", "dpx", "ob", "op", "ox", "pmx", "po", "rank"};
+const std::string mutation_map_short[5] = {"exchange", "insert", "inversion", "scramble", "swap"};
+const std::string selection_map_short[4] = {"rank", "roulette", "tournament", "uniform"};
 
 class Configuration {
     private:

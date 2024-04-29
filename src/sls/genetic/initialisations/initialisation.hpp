@@ -1,8 +1,10 @@
 #ifndef INITIALISATION_HPP
 #define INITIALISATION_HPP
 
-#include "../../../lop/instance.hpp"
+#include "../../../lop/configuration.hpp"
+#include "../../../lop/population.hpp"
 
-void initialize_population(Instance& instance);
-
+Population random_initialisation(Instance& instance, int population_size);
+Population bi_initialisation(Instance& instance, int population_size);
+Population initialisation(InitialSolution initial_solution_rule, Instance& instance, int population_size);
 #endif

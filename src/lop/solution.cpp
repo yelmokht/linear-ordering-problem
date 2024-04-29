@@ -11,6 +11,14 @@ Solution::Solution(int size)
     this->last_neighbour_ = {0, 0};
 }
 
+Solution::Solution(int size, const std::vector<int>& permutation)
+{
+    this->size_ = size;
+    this->permutation_ = permutation;
+    this->score_ = 0;
+    this->last_neighbour_ = {0, 0};
+}
+
 int
 Solution::size() const
 {
@@ -94,8 +102,10 @@ Solution::operator!=(const Solution& other) const
 void
 Solution::print() const
 {
+    std::cout << "Permutation: " << std::endl;
     for (int i = 0; i < this->size(); i++) {
         std::cout << this->permutation_[i] << " ";
     }
     std::cout << std::endl;
+    std::cout << "Score: " << this->score() << std::endl;
 }

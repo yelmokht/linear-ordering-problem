@@ -14,6 +14,7 @@ class Solution
     public:
         Solution();
         Solution(int size);
+        Solution(int size, const std::vector<int>& permutation);
         int size() const;
         const std::vector<int>& permutation() const;
         int score() const;

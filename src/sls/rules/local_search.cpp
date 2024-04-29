@@ -6,7 +6,7 @@
 
 Solution& insert(Instance& instance, Solution& solution)
 {
-    return best_improvement(Neighbourhood::INSERT, instance, solution);
+    return first_improvement(Neighbourhood::INSERT, instance, solution);
 }
 
 Solution& local_search(LocalSearch local_search_rule, Instance& instance, Solution& solution)
