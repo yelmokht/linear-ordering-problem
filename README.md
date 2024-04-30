@@ -3,6 +3,8 @@ Implementation of various SLS algorithms for the linear ordering problem (LOP). 
 
 ## Compilation
 
+To compile the project, simply run:
+
 ```bash
 make lop
 ```
@@ -77,12 +79,20 @@ Example:
 
 ## Implementation exercise 1
 
+To run the first implementation exercise, you can use this command:
+
 ```bash
 make ie1
 ```
 
+The results would be in ./statistics/ie1/
+
 ## Implementation exercise 2
+
+To run the first implementation exercise, you can use this command:
 
 ```bash
 make ie2
 ```
+
+The results would be in ./statistics/ie2/
