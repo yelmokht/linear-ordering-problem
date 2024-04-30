@@ -1,0 +1,7 @@
+"V1" "V2"
+"1" 0 1.93e-14
+"2" 0 0
+
+Wilcoxon test
+1 :  ils_random_insert_exchange.txt 
+2 :  ma_random_insert_cx_exchange_rank.txt 

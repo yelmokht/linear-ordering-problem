@@ -1,2 +1,2 @@
-ils_random_insert_exchange 0.000000 0.000000
-ma_random_insert_cx_exchange_rank 0.000000 0.000000
+ils_random_insert_exchange 3.599978 597.414960
+ma_random_insert_cx_exchange_rank 2.258203 1399.975240

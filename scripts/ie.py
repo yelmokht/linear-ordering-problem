@@ -131,7 +131,7 @@ if __name__ == "__main__":
     if arg == '2':
         compute_max_runtime()
     # experiments(arg)
-    # reports(arg)
+    reports(arg)
     if arg == '2':
         correlation_plots(arg)
-    # statistical_tests(arg)
+    statistical_tests(arg)
