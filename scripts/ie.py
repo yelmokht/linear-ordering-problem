@@ -76,6 +76,12 @@ def reports(arg):
             if file.endswith(".txt"):
                 report(os.path.join("./statistics/ie2/experiments", file), "./statistics/ie2/reports/report.txt")
 
+def correlation_plots(arg):
+    arg1 = "./statistics/ie2/experiments/"
+    arg2 = "./statistics/ie2/plots/"
+
+    subprocess.run(["./scripts/correlation_plots.r", arg1 ,arg2])
+
 def statistical_tests(arg):
     if arg == '1':
         arg1 = "./statistics/ie1/experiments/"
@@ -124,6 +130,8 @@ if __name__ == "__main__":
     arg = sys.argv[1]
     if arg == '2':
         compute_max_runtime()
-    experiments(arg)
-    reports(arg)
-    statistical_tests(arg)
+    # experiments(arg)
+    # reports(arg)
+    if arg == '2':
+        correlation_plots(arg)
+    # statistical_tests(arg)
