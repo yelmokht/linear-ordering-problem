@@ -13,17 +13,14 @@ correlation_plots <- function(source_path, output_path) {
 
     ils_data <- data.frame(value = data[1,])
     ma_data <- data.frame(value = data[2,])
-    print(ma_data)
   
-    # Plot
     plot <- ggplot() +
         geom_point(data = ils_data, aes(x = value, y = value, color = "ILS")) +
         geom_point(data = ma_data, aes(x = value, y = value, color = "MA")) +
         labs(x = "ILS", y = "MA") +
         ggtitle("Correlation plot of the average relative percentage deviation")
   
-    # Save the plot
-    ggsave(file.path(output_path, "correlation_plots.png"), plot)
+    ggsave(file.path(output_path, "correlation_plot.png"), plot)
 }
 
 
