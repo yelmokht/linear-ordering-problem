@@ -8,7 +8,7 @@
 #include "solution.hpp"
 
 #define BEST_KNOWN_FILE_PATH "./best_known/best_known.txt"
-#define MAX_RUNTIME_FILE_PATH "./statistics/max_runtime.txt"
+#define MAX_RUNTIME_FILE_PATH "./max_runtime/max_runtime.txt"
 
 class Instance 
 {

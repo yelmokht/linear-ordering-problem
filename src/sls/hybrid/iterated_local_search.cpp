@@ -33,7 +33,7 @@ IteratedLocalSearch::run(Instance& instance)
         }
 
         elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start_time).count();
-        std::cout << "Iteration: " << iteration << " Score: " << solution.score() << " Elapsed time: " << elapsed_time << std::endl;
+        std::cerr << "Iteration: " << iteration << " Score: " << solution.score() << " Elapsed time: " << elapsed_time << std::endl;
         iteration++;
     }
 

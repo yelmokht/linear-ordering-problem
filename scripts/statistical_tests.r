@@ -44,4 +44,8 @@ statistical_tests <- function(folder_path, output_path) {
 
 }
 
-statistical_tests("./statistics/experiments/", "./statistics/statistical_tests/")
+args <- commandArgs(trailingOnly = TRUE)
+source_path <- args[1]
+output_path <- args[2]
+
+statistical_tests(source_path, output_path)

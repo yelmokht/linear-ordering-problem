@@ -12,14 +12,11 @@ all: lop
 lop: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o lop
 
-statistics: lop
-	./scripts/ie1.py
+ie1: lop
+	./scripts/ie.py 1
 
-runtime:
-	./scripts/compute_max_runtime.py
-
-sls: runtime
-	./scripts/ie2.py
+ie2: lop
+	./scripts/ie.py 2
 
 clean:
 	find src -type f -name '*.o' -delete

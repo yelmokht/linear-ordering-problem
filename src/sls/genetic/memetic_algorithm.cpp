@@ -50,7 +50,7 @@ MemeticAlgorithm::run(Instance& instance)
         sp = selection(selection_rule, instance, sp, spr, spm);
 
         elapsed_time = std::chrono::duration_cast<std::chrono::seconds>(std::chrono::high_resolution_clock::now() - start_time).count();
-        std::cout << "Iteration: " << iteration << " - Best solution: " << sp.best_solution().score() << " - Elapsed time: " << elapsed_time << "s" << std::endl;
+        std::cerr << "Iteration: " << iteration << " - Best solution: " << sp.best_solution().score() << " - Elapsed time: " << elapsed_time << "s" << std::endl;
         iteration++;
     }
     
