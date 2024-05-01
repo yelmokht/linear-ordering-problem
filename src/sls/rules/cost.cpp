@@ -32,7 +32,7 @@ int exchange_delta(Instance& instance, Solution& solution, unsigned i, unsigned 
     unsigned l = permutation[j];
     int delta = matrix[l][k] - matrix[k][l];
 
-    for (unsigned m = i+1; m < j; m++) {
+    for (unsigned m = i + 1; m < j; m++) {
         unsigned n = permutation[m];
         delta += matrix[l][n] - matrix[k][n];
         delta += matrix[n][k] - matrix[n][l];
@@ -48,14 +48,16 @@ int insert_delta(Instance& instance, Solution& solution, unsigned i, unsigned j)
     int delta = 0;
     
     if (i < j) {
-        for (unsigned m = i + 1 ; m <= j ; m++) {
-            delta += matrix[permutation[m]][k] - matrix[k][permutation[m]];
+        for (unsigned l = i + 1; l < j + 1 ; l++) {
+            unsigned m = permutation[l];
+            delta += matrix[m][k] - matrix[k][m];
         }
     }
     
     if (i > j) {
-        for (unsigned m = j ; m <= i - 1 ; m++) {
-            delta += matrix[k][permutation[m]] - matrix[permutation[m]][k];
+        for (unsigned l = j; l < i; l++) {
+            unsigned m = permutation[l];
+            delta += matrix[k][m] - matrix[m][k];
         }
     }
     
