@@ -74,9 +74,7 @@ Solution random_r_solution(Instance& instance) {
     return random_solution;
 }
 
-Solution
-bi_solution(Instance& instance) 
-{
+Solution bi_solution(Instance& instance) {
     auto matrix = instance.matrix();
     auto k = instance.size();
     Solution bi_solution = instance.solution();
@@ -86,7 +84,7 @@ bi_solution(Instance& instance)
     for (int l = 0; l < k; l++) {
         std::vector<int> q(k);
 
-        for (int t = 0; t <= k; t++) {
+        for (int t = 0; t < k; t++) { // Change loop condition to t < k
             int sum_1 = 0;
             int sum_2 = 0;
 
@@ -114,6 +112,7 @@ bi_solution(Instance& instance)
     bi_solution.set_score(instance.evaluate(bi_solution));
     return bi_solution;
 }
+
 
 Solution
 initial_solution(InitialSolution initial_solution_rule, Instance& instance)
