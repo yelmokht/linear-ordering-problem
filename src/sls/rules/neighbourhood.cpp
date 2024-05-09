@@ -39,6 +39,21 @@ neighbourhood_is_valid(Neighbourhood neighbourhood_rule, unsigned i, unsigned j)
     }
 }
 
+std::vector<std::pair<int, int>>
+generate_neighbourhood(Neighbourhood neighbourhood_rule, int size)
+{
+    std::vector<std::pair<int, int>> neighbourhood;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (neighbourhood_is_valid(neighbourhood_rule, i, j)) {
+                neighbourhood.push_back({i, j});
+            }
+        }
+    }
+
+    return neighbourhood;
+}
+
 Solution&
 transpose(Solution& solution, unsigned i, unsigned j) 
 {

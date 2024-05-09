@@ -119,14 +119,14 @@ initial_solution(InitialSolution initial_solution_rule, Instance& instance)
 {
     switch (initial_solution_rule)
     {
+    case InitialSolution::RANDOM:
+        return random_seed_solution(instance);
     case InitialSolution::RANDOM_SEED:
         return random_seed_solution(instance);
     case InitialSolution::CW:
         return cw_solution(instance);
     case InitialSolution::BI:
         return bi_solution(instance);
-    case InitialSolution::RANDOM:
-        return random_solution(instance);
     default:
         assert(false);
     }

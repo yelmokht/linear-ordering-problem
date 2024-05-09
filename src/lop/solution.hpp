@@ -28,6 +28,7 @@ class Solution
         void set_last_neighbour(std::pair<unsigned, unsigned> last_neighbour);
         bool operator==(const Solution& other) const;
         bool operator!=(const Solution& other) const;
+        bool operator>=(const Solution& other) const;
         void print() const;
 };
 

@@ -46,6 +46,7 @@ Configuration::help(int exit_code)
               << std::endl
               << "  -pb, --perturbation [options]" << std::endl
               << "      - exchange (only for ils)" << std::endl
+              << "      - random-exchange (only for ils and ma)" << std::endl
               << std::endl
               << "  -r, --recombination [options]" << std::endl
               << "      - cx (only for ma)" << std::endl
@@ -141,14 +142,14 @@ void Configuration::parse_algorithm_option(std::string option) {
 }
 
 void Configuration::parse_initial_solution_option(std::string option) {
-    if (option == "random_seed" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
+    if (option == "random" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
+        this->i = InitialSolution::RANDOM;
+    } else if (option == "random_seed" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::RANDOM_SEED;
     } else if (option == "cw" && (this->a == Algorithm::II || this->a == Algorithm::VND || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::CW;
-    } else if (option == "bi" && (this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
+    } else if (option == "bi" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::BI;
-    } else if (option == "random" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
-        this->i = InitialSolution::RANDOM;
     } else {
         help(1);
     }
@@ -191,6 +192,8 @@ void Configuration::parse_local_search_option(std::string option) {
 void Configuration::parse_perturbation_option(std::string option) {
     if (option == "exchange" && this->a == Algorithm::ILS) {
         this->pb = Perturbation::EXCHANGE;
+    } else if (option == "random-exchange" && this->a == Algorithm::ILS || this->a == Algorithm::MA) {
+        this->pb = Perturbation::RANDOM_EXCHANGE;
     } else {
         help(1);
     }

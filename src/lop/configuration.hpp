@@ -51,7 +51,8 @@ enum class LocalSearch {
 
 enum class Perturbation {
     UNDEFINED = -1,
-    EXCHANGE
+    EXCHANGE,
+    RANDOM_EXCHANGE
 };
 
 enum class Recombination {

@@ -11,6 +11,8 @@ bool exchange_is_valid(unsigned i, unsigned j);
 bool insert_is_valid(unsigned i, unsigned j);
 bool neighbourhood_is_valid(Neighbourhood neighbourhood_rule, unsigned i, unsigned j);
 
+std::vector<std::pair<int, int>> generate_neighbourhood(Neighbourhood neighbourhood_rule, int size);
+
 Solution& transpose(Solution& solution, unsigned i, unsigned j);
 Solution& exchange(Solution& solution, unsigned i, unsigned j);
 Solution& insert(Solution& solution, unsigned i, unsigned j);

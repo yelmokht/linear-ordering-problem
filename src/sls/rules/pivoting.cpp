@@ -26,24 +26,7 @@ Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance
     return solution;
 }
 
-Solution& first_improvement_2(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
-{
-    for (unsigned i = 0; i < instance.size(); i++) {
-        for (unsigned j = 0; j < instance.size(); j++) {
 
-            if (neighbourhood_is_valid(neighbourhood_rule, i, j)) {
-                int new_score = solution.score() + delta(neighbourhood_rule, instance, solution, i, j);
-
-                if (new_score > solution.score()) {
-                    solution = apply_permutation(neighbourhood_rule, solution, i, j);
-                    return solution;
-                }
-            }
-        }
-    }
-
-    return solution;
-}
 
 Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
 {

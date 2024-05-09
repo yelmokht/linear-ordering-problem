@@ -16,5 +16,5 @@ termination_criterion_is_not_satisfied(double elapsed_time, double max_runtime)
 bool
 acceptance_criterion_is_not_satisfied(Solution& last_solution, Solution& new_solution)
 {
-    return (last_solution == new_solution);
+    return (last_solution >= new_solution);
 }

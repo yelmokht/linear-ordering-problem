@@ -99,6 +99,12 @@ Solution::operator!=(const Solution& other) const
     return this->score_ != other.score();
 }
 
+bool
+Solution::operator>=(const Solution& other) const
+{
+    return this->score_ >= other.score();
+}
+
 void
 Solution::print() const
 {
