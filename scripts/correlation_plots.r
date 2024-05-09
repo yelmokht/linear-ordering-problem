@@ -4,7 +4,7 @@ library(ggplot2)
 
 correlation_plots <- function(source_path, output_path) {
     files <- list.files(source_path, pattern = "*.txt", full.names = TRUE)
-    data <- array(0, c(length(files), 78))
+    data <- array(0, c(length(files), 39))
 
     # Read data from files into the 'data' array
     for (i in 1:length(files)) {
