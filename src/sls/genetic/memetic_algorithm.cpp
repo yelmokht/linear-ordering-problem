@@ -8,8 +8,15 @@
 #include "../rules/criterion.hpp"
 #include "../utils/utils.hpp"
 
-
-
+/**
+ * Constructor for the MemeticAlgorithm class.
+ * 
+ * @param initial_solution_rule The rule to use for generating the initial solution.
+ * @param local_search_rule The rule to use for the local search.
+ * @param recombination_rule The rule to use for the recombination.
+ * @param mutation_rule The rule to use for the mutation.
+ * @param selection_rule The rule to use for the selection.
+ */
 MemeticAlgorithm::MemeticAlgorithm(InitialSolution initial_solution_rule, LocalSearch local_search_rule, Recombination recombination_rule, Mutation mutation_rule, Selection selection_rule)
 {
     this->population_size = 25;
@@ -21,6 +28,11 @@ MemeticAlgorithm::MemeticAlgorithm(InitialSolution initial_solution_rule, LocalS
     this->selection_rule = selection_rule;
 }
 
+/**
+ * Runs the memetic algorithm.
+ * 
+ * @param instance The instance for which to run the algorithm.
+ */
 void
 MemeticAlgorithm::run(Instance& instance)
 {

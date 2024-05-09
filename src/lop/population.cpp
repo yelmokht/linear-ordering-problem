@@ -2,7 +2,11 @@
 
 #include "population.hpp"
 
-
+/**
+ * Constructor for the Population class.
+ * 
+ * @param size The size of the population.
+*/
 Population::Population(int size) {
     this->size_ = size;
     this->solutions_ = std::vector<Solution>(size);

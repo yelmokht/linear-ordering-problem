@@ -1,8 +1,11 @@
 #include "solution.hpp"
 #include <iostream>
 
-Solution::Solution() {}
-
+/**
+ * Constructor for the Solution class.
+ * 
+ * @param size The size of the solution.
+ */
 Solution::Solution(int size)
 {
     this->size_ = size;
@@ -11,6 +14,13 @@ Solution::Solution(int size)
     this->last_neighbour_ = {0, 0};
 }
 
+/**
+ * Constructor for the Solution class.
+ * 
+ * @param size The size of the solution.
+ * @param permutation The permutation of the solution.
+ 
+*/
 Solution::Solution(int size, const std::vector<int>& permutation)
 {
     this->size_ = size;
@@ -18,6 +28,8 @@ Solution::Solution(int size, const std::vector<int>& permutation)
     this->score_ = 0;
     this->last_neighbour_ = {0, 0};
 }
+
+Solution::Solution() {}
 
 int
 Solution::size() const

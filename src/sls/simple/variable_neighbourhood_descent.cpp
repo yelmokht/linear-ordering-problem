@@ -2,7 +2,13 @@
 
 #include "variable_neighbourhood_descent.hpp"
 
-
+/**
+ * Constructor for the VariableNeighbourhoodDescent class.
+ * 
+ * @param initial_solution_rule The rule for generating the initial solution.
+ * @param neighbourhood_rule The rule for generating the neighbourhood.
+ * @param pivoting_rule The rule for selecting the next solution.
+ */
 VariableNeighbourhoodDescent::VariableNeighbourhoodDescent(InitialSolution initial_solution_rule, Neighbourhood neighbourhood_rule, Pivoting pivoting_rule)
 {
     this->initial_solution_rule = initial_solution_rule;
@@ -10,6 +16,11 @@ VariableNeighbourhoodDescent::VariableNeighbourhoodDescent(InitialSolution initi
     this->pivoting_rule = pivoting_rule;
 }
 
+/**
+ * Get the neighbourhoods for the VND algorithm.
+ * 
+ * @param neighbourhood_rule The rule for generating the neighbourhood.
+ */
 void
 VariableNeighbourhoodDescent::get_neighbourhoods(Neighbourhood neighbourhood_rule) 
 {
@@ -28,6 +39,11 @@ VariableNeighbourhoodDescent::get_neighbourhoods(Neighbourhood neighbourhood_rul
     }
 }
 
+/**
+ * Runs the variable neighbourhood descent algorithm.
+ * 
+ * @param instance The instance for which to run the algorithm.
+ */
 void
 VariableNeighbourhoodDescent::run(Instance& instance)
 {

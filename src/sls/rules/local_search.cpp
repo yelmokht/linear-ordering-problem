@@ -5,6 +5,13 @@
 #include "neighbourhood.hpp"
 #include "cost.hpp"
 
+/**
+ * @brief Applies the insert local search operator to a solution
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param solution The solution to apply the operator to.
+ * @return Solution The mutated solution.
+ */
 Solution& insert(Instance& instance, Solution& solution)
 {
     int best_score = solution.score();
@@ -34,6 +41,14 @@ Solution& insert(Instance& instance, Solution& solution)
     return solution;
 }
 
+/**
+ * @brief Applies the local search operator to a solution
+ * 
+ * @param local_search_rule The local search operator to apply.
+ * @param instance The instance for which to apply the operator.
+ * @param solution The solution to apply the operator to.
+ * @return Solution The mutated solution.
+ */
 Solution& local_search(LocalSearch local_search_rule, Instance& instance, Solution& solution)
 {
     switch (local_search_rule)

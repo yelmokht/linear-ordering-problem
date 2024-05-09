@@ -6,6 +6,14 @@
 #include "../rules/perturbation.hpp"
 #include "../rules/criterion.hpp"
 
+/**
+ * Constructor for the IteratedLocalSearch class.
+ * 
+ * @param initial_solution_rule The rule to use for generating the initial solution.
+ * @param local_search_rule The rule to use for the local search.
+ * @param perturbation_rule The rule to use for the perturbation.
+ * @param acceptance_criterion The rule to use for the acceptance criterion.
+ */
 IteratedLocalSearch::IteratedLocalSearch(InitialSolution initial_solution_rule, LocalSearch local_search_rule, Perturbation perturbation_rule) 
 {
     this->initial_solution_rule = initial_solution_rule;
@@ -13,6 +21,11 @@ IteratedLocalSearch::IteratedLocalSearch(InitialSolution initial_solution_rule, 
     this->perturbation_rule = perturbation_rule;
 }
 
+/**
+ * Runs the iterated local search algorithm.
+ * 
+ * @param instance The instance for which to run the algorithm.
+ */
 void
 IteratedLocalSearch::run(Instance& instance)
 {

@@ -8,12 +8,20 @@
 
 #include "configuration.hpp"
 
+/**
+ * Constructor for the Configuration class.
+*/
 Configuration::Configuration(int argc, char *argv[]) 
 {
     parse_args(argc, argv);
     // print();
 }
 
+/**
+ * Prints the help message for arguments.
+ * 
+ * @param status The exit status.
+*/
 void
 Configuration::help(int exit_code)
 {
@@ -77,6 +85,12 @@ Configuration::help(int exit_code)
     exit(exit_code);
 }
 
+/**
+ * Parses the arguments to make a configuration object from it.
+ * 
+ * @param argc The number of arguments.
+ * @param argv The arguments.
+*/
 void Configuration::parse_args(int argc, char* argv[]) {
     if (argc < 7 || std::string(argv[1]) == "--help") {
         help(0);
@@ -127,6 +141,11 @@ void Configuration::parse_args(int argc, char* argv[]) {
     }
 }
 
+/**
+ * Parses the algorithm option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_algorithm_option(std::string option) {
     if (option == "ii") {
         this->a = Algorithm::II;
@@ -141,6 +160,11 @@ void Configuration::parse_algorithm_option(std::string option) {
     }
 }
 
+/**
+ * Parses the initial solution option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_initial_solution_option(std::string option) {
     if (option == "random" && (this->a == Algorithm::II || this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->i = InitialSolution::RANDOM;
@@ -155,6 +179,11 @@ void Configuration::parse_initial_solution_option(std::string option) {
     }
 }
 
+/**
+ * Parses the pivoting option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_pivoting_option(std::string option) {
     if (option == "first" && (this->a == Algorithm::II || this->a == Algorithm::VND)) {
         this->p = Pivoting::FIRST;
@@ -165,6 +194,11 @@ void Configuration::parse_pivoting_option(std::string option) {
     }
 }
 
+/**
+ * Parses the neighbourhood option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_neighbourhood_option(std::string option) {
     if (option == "transpose" && this->a == Algorithm::II) {
         this->n = Neighbourhood::TRANSPOSE;
@@ -181,6 +215,11 @@ void Configuration::parse_neighbourhood_option(std::string option) {
     }
 }
 
+/**
+ * Parses the local search option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_local_search_option(std::string option) {
     if (option == "insert" && (this->a == Algorithm::ILS || this->a == Algorithm::MA)) {
         this->l = LocalSearch::INSERT;
@@ -189,6 +228,11 @@ void Configuration::parse_local_search_option(std::string option) {
     }
 }
 
+/**
+ * Parses the perturbation option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_perturbation_option(std::string option) {
     if (option == "exchange" && this->a == Algorithm::ILS) {
         this->pb = Perturbation::EXCHANGE;
@@ -199,6 +243,11 @@ void Configuration::parse_perturbation_option(std::string option) {
     }
 }
 
+/**
+ * Parses the recombination option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_recombination_option(std::string option) {
     if (option == "cx" && this->a == Algorithm::MA) {
         this->r = Recombination::CX;
@@ -207,6 +256,11 @@ void Configuration::parse_recombination_option(std::string option) {
     }
 }
 
+/**
+ * Parses the mutation option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_mutation_option(std::string option) {
     if (option == "exchange" && this->a == Algorithm::MA) {
         this->m = Mutation::EXCHANGE;
@@ -215,6 +269,11 @@ void Configuration::parse_mutation_option(std::string option) {
     }
 }
 
+/**
+ * Parses the selection option.
+ * 
+ * @param option The option.
+*/
 void Configuration::parse_selection_option(std::string option) {
     if (option == "rank" && this->a == Algorithm::MA) {
         this->s = Selection::RANK;
@@ -284,6 +343,9 @@ Configuration::instance()
     return this->instance_;
 }
 
+/**
+ * Prints the configuration.
+*/
 void Configuration::print() const 
 {
     std::cerr << "- Configuration -" << std::endl;

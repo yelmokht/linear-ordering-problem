@@ -4,6 +4,13 @@
 #include "../../../lop/population.hpp"
 #include "../../rules/initial_solution.hpp"
 
+
+/**
+ * @brief Generates a random initial population for the given instance.
+ * 
+ * @param instance The instance for which to generate the initial population.
+ * @param population_size The size of the population.
+ */
 Population random_initialisation(Instance& instance, int population_size) {
     Population population(population_size);
 
@@ -16,6 +23,12 @@ Population random_initialisation(Instance& instance, int population_size) {
     return population;
 }
 
+/**
+ * @brief Generates an initial population using the Chenery-Watanabe heuristic for the given instance.
+ * 
+ * @param instance The instance for which to generate the initial population.
+ * @param population_size The size of the population.
+ */
 Population cw_initialisation(Instance& instance, int population_size) {
     Population population(population_size);
 
@@ -28,8 +41,12 @@ Population cw_initialisation(Instance& instance, int population_size) {
     return population;
 }
 
-
-
+/**
+ * @brief Generates an initial population using the Best Insertion heuristic for the given instance.
+ * 
+ * @param instance The instance for which to generate the initial population.
+ * @param population_size The size of the population.
+ */
 Population bi_initialisation(Instance& instance, int population_size) {
     Population population(population_size);
 
@@ -42,6 +59,13 @@ Population bi_initialisation(Instance& instance, int population_size) {
     return population;
 }
 
+/**
+ * @brief Generates an initial population for the given instance.
+ * 
+ * @param initial_solution_rule The rule to use for generating the initial population.
+ * @param instance The instance for which to generate the initial population.
+ * @param population_size The size of the population.
+ */
 Population initialisation(InitialSolution initial_solution_rule, Instance& instance, int population_size) {
     switch (initial_solution_rule) {
         case InitialSolution::RANDOM:

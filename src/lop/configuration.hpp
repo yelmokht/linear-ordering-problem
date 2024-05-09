@@ -5,8 +5,6 @@
 
 #include "instance.hpp"
 
-#define termination "./statistics/vnd_average.txt"
-
 enum class Algorithm {
     UNDEFINED = -1,
     II,

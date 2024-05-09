@@ -4,6 +4,15 @@
 #include "../../rules/neighbourhood.hpp"
 #include "../../rules/cost.hpp"
 
+
+/**
+ * @brief Applies the exchange mutation operator to a population
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param population The population to apply the operator to.
+ * @param mutation_rate The mutation rate.
+ * @return Population The mutated population.
+*/
 Population exchange_mutation(Instance& instance, Population& population, double mutation_rate) {
     Population mutated_population(population.size());
 
@@ -29,33 +38,71 @@ Population exchange_mutation(Instance& instance, Population& population, double 
     return mutated_population;
 }
 
-
-
-
+/**
+ * @brief Applies the insert mutation operator to a population
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param population The population to apply the operator to.
+ * @param mutation_rate The mutation rate.
+ * @return Population The mutated population.
+*/
 Population insert_mutation(Instance& instance, Population& population, double mutation_rate)
 {
     //For future implementation
     return population;
 }
 
+/**
+ * @brief Applies the inversion mutation operator to a population
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param population The population to apply the operator to.
+ * @param mutation_rate The mutation rate.
+ * @return Population The mutated population.
+*/
 Population invert_mutation(Instance& instance, Population& population, double mutation_rate)
 {
     //For future implementation
     return population;
 }
 
+/**
+ * @brief Applies the scramble mutation operator to a population
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param population The population to apply the operator to.
+ * @param mutation_rate The mutation rate.
+ * @return Population The mutated population.
+*/
 Population scramble_mutation(Instance& instance, Population& population, double mutation_rate)
 {
     //For future implementation
     return population;
 }
 
+/**
+ * @brief Applies the swap mutation operator to a population
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param population The population to apply the operator to.
+ * @param mutation_rate The mutation rate.
+ * @return Population The mutated population.
+*/
 Population swap_mutation(Instance& instance, Population& population, double mutation_rate)
 {
     //For future implementation
     return population;
 }
 
+/**
+ * @brief Applies a mutation operator to a population
+ * 
+ * @param mutation_rule The mutation operator to apply.
+ * @param instance The instance for which to apply the operator.
+ * @param population The population to apply the operator to.
+ * @param mutation_rate The mutation rate.
+ * @return Population The mutated population.
+*/
 Population mutation(Mutation mutation_rule, Instance& instance, Population& population, double mutation_rate)
 {
     switch (mutation_rule)

@@ -54,7 +54,8 @@
         "iomanip": "cpp",
         "sstream": "cpp",
         "fstream": "cpp",
-        "cassert": "cpp"
+        "cassert": "cpp",
+        "filesystem": "cpp"
     },
     "remote.autoForwardPortsFallback": 0
 }

@@ -42,7 +42,6 @@ class Instance
         void set_solution(Solution solution);
         void set_computation_time(double computation_time);
         int evaluate(Solution& solution);
-        void permute(Solution& solution);
         void save_max_runtime();
         void print();
 };

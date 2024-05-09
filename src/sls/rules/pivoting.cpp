@@ -7,6 +7,15 @@
 #include "../../lop/solution.hpp"
 #include "../../lop/configuration.hpp"
 
+/**
+ * @brief Finds the first improvement for a solution using a neighbourhood rule.
+ * 
+ * @param neighbourhood_rule The neighbourhood rule to use.
+ * @param instance The instance for which to improve the solution.
+ * @param solution The solution to improve.
+ * 
+ * @return Solution The improved solution.
+*/
 Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
 {
     for (unsigned i = 0; i < instance.size(); i++) {
@@ -26,8 +35,15 @@ Solution& first_improvement(Neighbourhood neighbourhood_rule, Instance& instance
     return solution;
 }
 
-
-
+/**
+ * @brief Finds the best improvement for a solution using a neighbourhood rule.
+ * 
+ * @param neighbourhood_rule The neighbourhood rule to use.
+ * @param instance The instance for which to improve the solution.
+ * @param solution The solution to improve.
+ * 
+ * @return Solution The improved solution.
+*/
 Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution) 
 {
     int best_score = solution.score();
@@ -54,7 +70,16 @@ Solution& best_improvement(Neighbourhood neighbourhood_rule, Instance& instance,
     return solution;
 }
 
-
+/**
+ * @brief Improves a solution using a pivoting rule and a neighbourhood rule.
+ * 
+ * @param pivoting_rule The pivoting rule to use.
+ * @param neighbourhood_rule The neighbourhood rule to use.
+ * @param instance The instance for which to improve the solution.
+ * @param solution The solution to improve.
+ * 
+ * @return Solution The improved solution.
+*/
 Solution& improvement(Pivoting pivoting_rule, Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution)
 {
     switch (pivoting_rule)

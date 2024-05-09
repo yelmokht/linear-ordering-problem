@@ -5,6 +5,14 @@
 #include "crossover.hpp"
 #include "../../rules/cost.hpp"
 
+/**
+ * @brief Applies the Cycle Crossover operator to two parent solutions.
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param parent_1 The first parent solution.
+ * @param parent_2 The second parent solution.
+ * @return std::pair<Solution, Solution> The offspring solutions.
+ */
 std::pair<Solution, Solution> cx(Instance& instance, Solution& parent_1, Solution& parent_2)
 {
     int size = parent_1.size();

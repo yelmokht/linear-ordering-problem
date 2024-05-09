@@ -3,6 +3,14 @@
 
 #include "cost.hpp"
 
+/**
+ * @brief Evaluates the cost of a solution for the given instance.
+ * 
+ * @param instance The instance for which to evaluate the solution.
+ * @param solution The solution to evaluate.
+ * 
+ * @return int The cost of the solution.
+ */
 int evaluate(Instance& instance, Solution& solution) {
     auto matrix = instance.matrix();
     auto permutation = solution.permutation();
@@ -16,6 +24,16 @@ int evaluate(Instance& instance, Solution& solution) {
     return cost;
 }
 
+/**
+ * @brief Calculates the delta of a transpose move.
+ * 
+ * @param instance The instance for which to calculate the delta.
+ * @param solution The solution for which to calculate the delta.
+ * @param i The first index of the move.
+ * @param j The second index of the move.
+ * 
+ * @return int The delta of the move.
+ */
 int transpose_delta(Instance& instance, Solution& solution, unsigned i, unsigned j) {
     auto matrix = instance.matrix();
     auto permutation = solution.permutation();
@@ -25,6 +43,16 @@ int transpose_delta(Instance& instance, Solution& solution, unsigned i, unsigned
     return delta;
 }
 
+/**
+ * @brief Calculates the delta of an exchange move.
+ * 
+ * @param instance The instance for which to calculate the delta.
+ * @param solution The solution for which to calculate the delta.
+ * @param i The first index of the move.
+ * @param j The second index of the move.
+ * 
+ * @return int The delta of the move.
+ */
 int exchange_delta(Instance& instance, Solution& solution, unsigned i, unsigned j) {
     auto matrix = instance.matrix();
     auto permutation = solution.permutation();
@@ -41,6 +69,16 @@ int exchange_delta(Instance& instance, Solution& solution, unsigned i, unsigned 
     return delta;
 }
 
+/**
+ * @brief Calculates the delta of an insert move.
+ * 
+ * @param instance The instance for which to calculate the delta.
+ * @param solution The solution for which to calculate the delta.
+ * @param i The first index of the move.
+ * @param j The second index of the move.
+ * 
+ * @return int The delta of the move.
+ */
 int insert_delta(Instance& instance, Solution& solution, unsigned i, unsigned j) {
     auto matrix = instance.matrix();
     auto permutation = solution.permutation();
@@ -64,6 +102,17 @@ int insert_delta(Instance& instance, Solution& solution, unsigned i, unsigned j)
     return delta;
 }
 
+/**
+ * @brief Calculates the delta of a move.
+ * 
+ * @param neighbourhood_rule The neighbourhood rule.
+ * @param instance The instance for which to calculate the delta.
+ * @param solution The solution for which to calculate the delta.
+ * @param i The first index of the move.
+ * @param j The second index of the move.
+ * 
+ * @return int The delta of the move.
+ */
 int delta(Neighbourhood neighbourhood_rule, Instance& instance, Solution& solution, unsigned i, unsigned j)
 {
     switch (neighbourhood_rule)

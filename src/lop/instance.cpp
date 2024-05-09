@@ -11,6 +11,11 @@
 Instance::Instance() 
 {}
 
+/**
+ * Constructor for the Instance class.
+ * 
+ * @param filepath The path to the file containing the instance.
+*/
 Instance::Instance(std::string filepath) 
 {
     check_file(filepath);
@@ -20,6 +25,11 @@ Instance::Instance(std::string filepath)
 
 Instance::~Instance() {}
 
+/**
+ * Checks if the file exists and sets the name of the instance.
+ * 
+ * @param filepath The path to the file to check.
+*/
 void 
 Instance::check_file(std::string filepath)
 {
@@ -32,6 +42,11 @@ Instance::check_file(std::string filepath)
     this->name_ = path.filename().string();
 }
 
+/**
+ * Saves the matrix from the file to the instance.
+ * Sets the size of the instance and the seed.
+ * @param filepath The path to the file containing the instance.
+*/
 void 
 Instance::save_matrix(std::string filepath)
 {
@@ -56,6 +71,11 @@ Instance::save_matrix(std::string filepath)
     }
 }
 
+/**
+ * Saves the best known solution for the instance.
+ * 
+ * @param filepath The path to the file containing the best known solutions.
+*/
 void 
 Instance::save_best_known_score(std::string filepath)
 {
@@ -83,6 +103,9 @@ Instance::save_best_known_score(std::string filepath)
     }
 }
 
+/**
+ * Saves the max runtime for the instance.
+*/
 void
 Instance::save_max_runtime()
 {
@@ -166,6 +189,12 @@ Instance::max_runtime() const
     return this->max_runtime_;
 }
 
+/**
+ * Sets the solution for the instance.
+ * Computes the relative percentage deviation.
+ * 
+ * @param solution The solution to set.
+*/
 void
 Instance::set_solution(Solution solution)
 {
@@ -201,17 +230,4 @@ Instance::evaluate(Solution& solution)
         }
     }
     return score;
-}
-
-void
-Instance::permute(Solution& solution)
-{
-    auto permutation = solution.permutation();
-    auto new_matrix = std::vector<std::vector<int>>(size_, std::vector<int>(size_));
-    for (int i = 0; i < size(); i++) {
-        for (int j = 0; j < size(); j++) {
-            new_matrix[i][j] = matrix_[permutation[i]][permutation[j]];
-        }
-    }
-    matrix_ = new_matrix;
 }

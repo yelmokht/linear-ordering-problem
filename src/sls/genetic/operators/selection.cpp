@@ -5,6 +5,15 @@
 
 #include "selection.hpp"
 
+/**
+ * @brief Applies the Rank Selection operator to the current population.
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param current_population The current population.
+ * @param recombined_population The recombined population.
+ * @param mutated_population The mutated population.
+ * @return Population The selected population.
+ */
 Population rank_selection(Instance& instance, Population& current_population, Population& recombined_population, Population& mutated_population) {
     int population_size = current_population.size();
     Population ranked_population(population_size);
@@ -22,22 +31,58 @@ Population rank_selection(Instance& instance, Population& current_population, Po
     return ranked_population;
 }
 
-
+/**
+ * @brief Applies the Roulette Selection operator to the current population.
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param current_population The current population.
+ * @param recombined_population The recombined population.
+ * @param mutated_population The mutated population.
+ * @return Population The selected population.
+ */
 Population roulette_selection(Instance& instance, Population& current_population, Population& recombined_population, Population& mutated_population) {
     //Future implementation
     return current_population;
 }
 
+/**
+ * @brief Applies the Tournament Selection operator to the current population.
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param current_population The current population.
+ * @param recombined_population The recombined population.
+ * @param mutated_population The mutated population.
+ * @return Population The selected population.
+ */
 Population tournament_selection(Instance& instance, Population& current_population, Population& recombined_population, Population& mutated_population) {
     //Future implementation
     return current_population;
 }
 
+/**
+ * @brief Applies the Uniform Selection operator to the current population.
+ * 
+ * @param instance The instance for which to apply the operator.
+ * @param current_population The current population.
+ * @param recombined_population The recombined population.
+ * @param mutated_population The mutated population.
+ * @return Population The selected population.
+ */
 Population uniform_selection(Instance& instance, Population& current_population, Population& recombined_population, Population& mutated_population) {
     //Future implementation
     return current_population;
 }
 
+/**
+ * @brief Applies the selection operator to the current population.
+ * 
+ * @param selection_rule The selection rule to apply.
+ * @param instance The instance for which to apply the operator.
+ * @param current_population The current population.
+ * @param recombined_population The recombined population.
+ * @param mutated_population The mutated population.
+ * @return Population The selected population.
+ */
 Population selection(Selection selection_rule, Instance& instance, Population& current_population, Population& recombined_population, Population& mutated_population) {
     switch (selection_rule) {
         case Selection::RANK:

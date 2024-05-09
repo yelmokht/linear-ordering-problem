@@ -6,6 +6,13 @@
 
 #include "initial_solution.hpp"
 
+/**
+ * @brief Generates a random initial solution for a given instance.
+ * 
+ * @param instance The instance for which to generate the initial solution.
+ * 
+ * @return Solution The initial solution.
+*/
 Solution
 random_seed_solution(Instance& instance) 
 {
@@ -18,6 +25,13 @@ random_seed_solution(Instance& instance)
     return random_solution;
 }
 
+/**
+ * @brief Generates a Chenery-Watanabe initial solution for a given instance.
+ * 
+ * @param instance The instance for which to generate the initial solution.
+ * 
+ * @return Solution The initial solution.
+*/
 Solution
 cw_solution(Instance& instance) 
 {
@@ -52,6 +66,13 @@ cw_solution(Instance& instance)
     return cw_solution;
 }
 
+/**
+ * @brief Generates a random initial solution for a given instance.
+ * 
+ * @param instance The instance for which to generate the initial solution.
+ * 
+ * @return Solution The initial solution.
+*/
 Solution random_solution(Instance& instance) {
     Solution random_solution = instance.solution();
     auto random_permutation = random_solution.permutation();
@@ -64,6 +85,13 @@ Solution random_solution(Instance& instance) {
     return random_solution;
 }
 
+/**
+ * @brief Generates a random initial solution for a given instance.
+ * 
+ * @param instance The instance for which to generate the initial solution.
+ * 
+ * @return Solution The initial solution.
+*/
 Solution random_r_solution(Instance& instance) {
     Solution random_solution = instance.solution();
     auto random_permutation = random_solution.permutation();
@@ -74,6 +102,13 @@ Solution random_r_solution(Instance& instance) {
     return random_solution;
 }
 
+/**
+ * @brief Generates a Best Insertion initial solution for a given instance.
+ * 
+ * @param instance The instance for which to generate the initial solution.
+ * 
+ * @return Solution The initial solution.
+*/
 Solution bi_solution(Instance& instance) {
     auto matrix = instance.matrix();
     auto k = instance.size();
@@ -113,7 +148,14 @@ Solution bi_solution(Instance& instance) {
     return bi_solution;
 }
 
-
+/**
+ * @brief Generates an initial solution for a given instance.
+ * 
+ * @param initial_solution_rule The rule to use for generating the initial solution.
+ * @param instance The instance for which to generate the initial solution.
+ * 
+ * @return Solution The initial solution.
+*/
 Solution
 initial_solution(InitialSolution initial_solution_rule, Instance& instance)
 {

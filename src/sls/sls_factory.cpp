@@ -6,9 +6,16 @@
 #include "hybrid/iterated_local_search.hpp"
 #include "genetic/memetic_algorithm.hpp"
 
+/**
+ * Runs the SLS algorithm.
+ * 
+ * @param configuration The configuration for the algorithm.
+ * @param instance The instance for which to run the algorithm.
+ */
 void
 sls_algorithm(Configuration& configuration, Instance& instance)
 {
+    // Get the rules from the configuration
     auto algorithm_rule = configuration.algorithm();
     auto initial_solution_rule = configuration.initial_solution();
     auto neighbourhood_rule = configuration.neighbourhood();
