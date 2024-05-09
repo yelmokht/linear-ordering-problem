@@ -41,7 +41,7 @@ def experiments(arg):
     if arg == '2':
         experiments_data = [
             ("-a ils -i random -ls insert -pb exchange", "./statistics/ie2/experiments/ils_random_insert_exchange.txt"),
-            # ("-a ma -i random -ls insert -r cx -m exchange -s rank", "./statistics/ie2/experiments/ma_random_insert_cx_exchange_rank.txt"),
+            ("-a ma -i random -ls insert -r cx -m exchange -s rank", "./statistics/ie2/experiments/ma_random_insert_cx_exchange_rank.txt"),
             ]
     
     for options, output in experiments_data:
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     arg = sys.argv[1]
     if arg == '2':
         compute_max_runtime()
-    experiments(arg)
+    # experiments(arg)
     reports(arg)
     if arg == '2':
         correlation_plots(arg)
