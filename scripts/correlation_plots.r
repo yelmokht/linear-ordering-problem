@@ -34,9 +34,10 @@ correlation_plots <- function(source_path, output_path) {
         geom_point(aes(x = ils_data, y = ma_data), shape = 21, color = "black", fill = "white", stroke = 0.2) +
         geom_abline(intercept = intercept, slope = slope, color = "red", linewidth = 0.2) +
         labs(x = "Relative deviation with ILS (%)", y = "Relative deviation with MA (%)") +
-        ggtitle("Correlation plot of the average relative percentage deviation") +
+        ggtitle("Correlation plot of the relative percentage deviations for two SLS algorithms") +
         xlim(ils_min, ils_max) + ylim(ma_min, ma_max) +
-        theme_linedraw()
+        theme_linedraw() +
+        theme(plot.title = element_text(size = 11))
 
     # Save the plot
     ggsave(file.path(output_path, "correlation_plot.png"), plot, width = 6, height = 4)
