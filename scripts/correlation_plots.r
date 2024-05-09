@@ -2,6 +2,7 @@
 
 library(ggplot2)
 
+# This script is used to create a correlation plot of the relative percentage deviations for two SLS algorithms
 correlation_plots <- function(source_path, output_path) {
     files <- list.files(source_path, pattern = "*.txt", full.names = TRUE)
     data <- array(0, c(length(files), 39))

@@ -1,5 +1,8 @@
 #!/bin/Rscript
 
+# This script is used to perform statistical tests on the solutions of the students
+# The script reads the solutions from the folder and performs the Student t-test and Wilcoxon test
+# The results are written to the output folder
 statistical_tests <- function(folder_path, output_path) {
     files <- list.files(folder_path, pattern="*.txt")
     solutions <- array(0, c(length(files), 78))
